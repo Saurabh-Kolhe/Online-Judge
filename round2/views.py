@@ -195,7 +195,8 @@ def handle_answer(request, user_id, question_id):
                           {'pegs_id': int("3"), 'submitted': False, 'submitted_code': code,
                            'selected_question': current_question,
                            'user_id': user_id, 'checker': False,
-                           'remaining_time': current_user.end_time - time.time(), 'error_msg': str(compile_ouput)})
+                           'remaining_time': current_user.end_time - time.time(), 'error_msg': str(compile_ouput)
+                           ,"question_id": question_id})
 
         # return HttpResponse("<h2>"+ str(result) +"</h2>")
     ''' else :

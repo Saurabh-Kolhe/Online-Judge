@@ -1,38 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="039fb828-f419-47f8-9e0a-9d63fbc072f8" name="Default" comment="&#10;Initial commit">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3200dfc0-6498-4f40-b2c2-2fb15be26675.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/3200dfc0-6498-4f40-b2c2-2fb15be26675.xml" />
+    <list default="true" id="039fb828-f419-47f8-9e0a-9d63fbc072f8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0001_initial.py" afterPath="$PROJECT_DIR$/round2/migrations/0001_initial.py" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0002_question_input.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0003_question_correct_op.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0004_auto_20170102_1653.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0005_auto_20170103_1026.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0006_auto_20170103_1028.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0007_auto_20170103_2216.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0008_auto_20170106_0647.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0009_auto_20170106_0656.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0010_auto_20170106_0700.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0011_auto_20170106_0857.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0012_user_money.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0013_user_buyed_questions.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0014_question_cost.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0015_question_user.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0016_auto_20171216_0825.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0017_remove_user_buyed_questions.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0018_question_type.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0019_user_easy_counter.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0020_auto_20171216_0956.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0021_auto_20171216_0957.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0022_auto_20171216_0957.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0023_auto_20171216_0957.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0024_auto_20171216_1001.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0025_auto_20171216_1002.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/migrations/0026_auto_20171216_1002.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/round2/models.py" afterPath="$PROJECT_DIR$/round2/models.py" />
       <change beforePath="$PROJECT_DIR$/round2/static/instruction.css" afterPath="$PROJECT_DIR$/round2/static/instruction.css" />
       <change beforePath="$PROJECT_DIR$/round2/templates/round2/instruction.html" afterPath="$PROJECT_DIR$/round2/templates/round2/instruction.html" />
       <change beforePath="$PROJECT_DIR$/round2/templates/round2/leaderboard.html" afterPath="$PROJECT_DIR$/round2/templates/round2/leaderboard.html" />
@@ -92,8 +62,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/round2/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="72" column="24" lean-forward="true" selection-start-line="72" selection-start-column="24" selection-end-line="72" selection-end-column="24" />
+            <state relative-caret-position="159">
+              <caret line="97" column="34" lean-forward="true" selection-start-line="97" selection-start-column="34" selection-end-line="97" selection-end-column="34" />
               <folding>
                 <element signature="e#0#49#0" expanded="true" />
               </folding>
@@ -104,7 +74,7 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/round2/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
+            <state relative-caret-position="486">
               <caret line="27" column="38" lean-forward="true" selection-start-line="27" selection-start-column="38" selection-end-line="27" selection-end-column="38" />
               <folding />
             </state>
@@ -114,8 +84,8 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/round2/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="7" column="54" lean-forward="false" selection-start-line="7" selection-start-column="54" selection-end-line="7" selection-end-column="54" />
+            <state relative-caret-position="270">
+              <caret line="16" column="75" lean-forward="true" selection-start-line="16" selection-start-column="75" selection-end-line="16" selection-end-column="75" />
               <folding />
             </state>
           </provider>
@@ -124,8 +94,8 @@
       <file leaf-file-name="question_details.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/round2/templates/round2/question_details.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="350" column="32" lean-forward="false" selection-start-line="350" selection-start-column="32" selection-end-line="350" selection-end-column="32" />
+            <state relative-caret-position="2241">
+              <caret line="331" column="55" lean-forward="false" selection-start-line="331" selection-start-column="55" selection-end-line="331" selection-end-column="66" />
               <folding>
                 <element signature="n#script#3;n#!!top" expanded="false" />
               </folding>
@@ -500,7 +470,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513418890495</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="&#10;Initial commit">
+      <created>1513420203010</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1513420203010</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -545,42 +522,42 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/round2/views.py</url>
-          <line>252</line>
+          <line>253</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/round2/views.py</url>
-          <line>253</line>
+          <line>254</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/round2/views.py</url>
-          <line>256</line>
+          <line>257</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/round2/views.py</url>
-          <line>268</line>
+          <line>269</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/round2/views.py</url>
-          <line>276</line>
+          <line>277</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/round2/views.py</url>
-          <line>258</line>
+          <line>259</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/round2/views.py</url>
-          <line>261</line>
+          <line>262</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/round2/views.py</url>
-          <line>263</line>
+          <line>264</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
@@ -854,14 +831,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/round2/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="7" column="54" lean-forward="false" selection-start-line="7" selection-start-column="54" selection-end-line="7" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/lib/python3.5/dist-packages/django/core/management/base.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -899,16 +868,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/round2/templates/round2/question_details.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="350" column="32" lean-forward="false" selection-start-line="350" selection-start-column="32" selection-end-line="350" selection-end-column="32" />
-          <folding>
-            <element signature="n#script#3;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/round2/templates/round2/select_questions.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="810">
@@ -922,16 +881,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/round2/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
+        <state relative-caret-position="486">
           <caret line="27" column="38" lean-forward="true" selection-start-line="27" selection-start-column="38" selection-end-line="27" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/round2/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="16" column="75" lean-forward="true" selection-start-line="16" selection-start-column="75" selection-end-line="16" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/round2/templates/round2/question_details.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2241">
+          <caret line="331" column="55" lean-forward="false" selection-start-line="331" selection-start-column="55" selection-end-line="331" selection-end-column="66" />
+          <folding>
+            <element signature="n#script#3;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/round2/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="72" column="24" lean-forward="true" selection-start-line="72" selection-start-column="24" selection-end-line="72" selection-end-column="24" />
+        <state relative-caret-position="159">
+          <caret line="97" column="34" lean-forward="true" selection-start-line="97" selection-start-column="34" selection-end-line="97" selection-end-column="34" />
           <folding>
             <element signature="e#0#49#0" expanded="true" />
           </folding>
