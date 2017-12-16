@@ -1,0 +1,284 @@
+from django.shortcuts import render, HttpResponse
+from .models import User, Question
+import subprocess
+import json
+import pyperclip
+from subprocess import Popen, PIPE
+import time
+
+
+def question(request, user_id):
+    all_questions = Question.objects.all()
+    current_user = User.objects.get(pk=user_id)
+    jsonDec = json.decoder.JSONDecoder()
+    all_marks = list(jsonDec.decode(current_user.score))
+    current_user.total_score = 0
+    temp = 0
+    for marks in all_marks:
+        temp += marks
+    question_list = []
+    for questions in all_questions:
+        if current_user in questions.user.all():
+            question_list.append({"question": questions,
+                                  "status": "bought",
+                                  "cost": questions.cost,
+                                  "difficulty":questions.type})
+        else:
+            question_list.append({"question": questions,
+                                  "status": "not bought",
+                                  "cost": questions.cost,
+                                  "difficulty": questions.type
+                                  })
+
+    current_user.total_score = temp
+    current_user.save()
+    print(current_user.total_score)
+
+    # return render(request, 'round2/questions_list.html', {'all_questions' : all_questions, 'user_id': user_id,'remaining_time':current_user.end_time-time.time(),'all_marks':all_marks ,'one':50,'two':50,'three':100,'four':100})
+    return render(request, 'round2/select_questions.html',
+                  {'buyed_questions': '', 'all_questions': all_questions, 'user_id': user_id,
+                   'remaining_time': current_user.end_time - time.time(),
+                   'all_marks': all_marks, 'one': 50, 'two': 50, 'three': 100,
+                   'four': 100, 'question_list': question_list})
+
+
+def register(request):
+    return render(request, 'round2/register.html', {})
+
+
+def create_user(request):
+    team_name = request.POST.get('team_name')
+    participant1 = request.POST.get('participant1')
+    mobile1 = request.POST.get('mobile1')
+    college1 = request.POST.get('college1')
+    email1 = request.POST.get('email1')
+    reciept_number = request.POST.get('reciept_number')
+    participant2 = request.POST.get('participant2')
+    mobile2 = request.POST.get('mobile2')
+    college2 = request.POST.get('college2')
+    email2 = request.POST.get('email2')
+    msg = ''
+
+    new_user = User(login_name=team_name, phone_number1=mobile1, phone_number2=mobile2,
+                    college_name1=college1,
+                    college_name2=college2, user_name1=participant1, user_name2=participant2, email1=email1,
+                    email2=email2, score="[0, 0, 0, 0, 0]", end_time=(time.time() + (60 * 120)))
+    print(new_user.end_time)
+    new_user.save()
+    # return question(request,new_user.pk)
+    return instruction_view(request, new_user.pk)
+
+
+def question_details(request, user_id, question_id):
+    selected_question = Question.objects.get(pk=question_id)
+    print(selected_question)
+    current_user = User.objects.get(pk=user_id)
+    print(current_user.end_time)
+    print(current_user.end_time - time.time())
+    bought = False
+    if current_user in selected_question.user.all():
+        bought = True
+
+    jsonDec = json.decoder.JSONDecoder()
+    current_user.total_score = 0
+    all_marks = list(jsonDec.decode(current_user.score))
+    for marks in all_marks:
+        current_user.total_score += marks
+    current_user.save()
+    try:
+        previous_code = open(str(question_id) + '_' + str(user_id) + '.cpp', 'r').read()
+    except:
+        previous_code = ""
+    return render(request, 'round2/question_details.html',
+                  {'pegs_id': int("3"), 'bought': bought, 'selected_question': selected_question,
+                   'question_id': selected_question.pk,
+                   'user_id': user_id, 'submitted_code': previous_code,
+                   'remaining_time': current_user.end_time - time.time()})
+
+
+def handle_answer(request, user_id, question_id):
+    if request.POST.get("finish"):
+        return leaderboard(request, user_id)
+    # code = request.POST.get("text_area")
+    if request.POST.get("submit"):
+        code = request.POST.get("text_area")
+
+        # print(code)
+        f = open(str(question_id) + '_' + str(user_id) + '.cpp', 'w')
+
+        # f=open('test.cpp','w')
+        f.write(code)
+
+        f.close()
+
+        print("printing my code")
+        print(code)
+        current_question = Question.objects.get(pk=question_id)
+        jsonDec = json.decoder.JSONDecoder()
+        correct_op = list(jsonDec.decode(current_question.correct_op))
+        input = list(jsonDec.decode(current_question.input))
+        '''pyperclip.copy('The text to be copied to the clipboard.')
+            return render(request, 'round2/question_details.html',
+                      {'submitted': True, 'submitted_code': str(code), 'selected_question': current_question,
+                       'user_id': user_id})'''
+        t = 0
+        # from subprocess import CalledProcessError, check_output
+        compile_ouput = subprocess.getoutput('g++ ' + str(question_id) + '_' + str(user_id) + '.cpp')
+        marks = 0
+        current_user = User.objects.get(pk=user_id)
+        if not compile_ouput:
+            print('compiled')
+            '''f = open('output.txt', 'w')
+                        output = subprocess.check_output('a.exe', universal_newlines=True, shell=True)
+                        f.write(output)
+                        f.close()'''
+
+            input_length = len(input)
+            counter = 0
+            result = [None] * len(input)
+            checker = [None] * len(input)
+            for ii in input:
+
+                p = Popen(['a.exe'], shell=True, stdout=PIPE, stdin=PIPE)
+                value = str(ii) + '\n'
+                value = bytes(value, 'UTF-8')  # Needed in Python 3.
+
+                p.stdin.write(value)
+                p.stdin.flush()
+
+                result[counter] = str(p.stdout.readline().rstrip())
+                a = result[counter] + "b''"
+                temp = ""
+                result[counter] = result[counter][2:len(result[counter]) - 1]
+                print(a)
+                print(result[counter])
+                while not temp == "b''":
+                    # result += "<br>"
+                    temp = str(p.stdout.readline().rstrip())
+                    if not temp == "b''":
+                        temp = temp[2:len(temp) - 1]
+                        result[counter] += temp
+                    print(result)
+
+                if str(correct_op[counter]) == result[counter]:
+                    checker[counter] = True
+                    marks += 2
+                else:
+                    checker[counter] = False
+                counter += 1
+            print(code)
+
+            all_marks = list(jsonDec.decode(current_user.score))
+            if all_marks[int(question_id) - 1] < marks:
+                all_marks[int(question_id) - 1] = marks
+                current_user.score = json.dumps(all_marks)
+            current_user.save()
+            print(all_marks)
+
+            current_user.total_score = 0
+            all_marks = list(jsonDec.decode(current_user.score))
+            for marks in all_marks:
+                current_user.total_score += marks
+            current_user.save()
+            return render(request, 'round2/question_details.html',
+                          {'pegs_id': int("3"), 'error_msg': False, 'submitted': True, 'one': 50, 'two': 50,
+                           'three': 100, 'four': 100, 'submitted_code': code, 'selected_question': current_question,
+                           'user_id': user_id, 'checker': checker,
+                           'remaining_time': current_user.end_time - time.time()})
+        else:
+            print(subprocess.CalledProcessError)
+            # print(compile_ouput)
+
+            f = open('output.txt', 'w')
+            f.write(compile_ouput)
+            f.close()
+
+            return render(request, 'round2/question_details.html',
+                          {'pegs_id': int("3"), 'submitted': False, 'submitted_code': code,
+                           'selected_question': current_question,
+                           'user_id': user_id, 'checker': False,
+                           'remaining_time': current_user.end_time - time.time(), 'error_msg': str(compile_ouput)})
+
+        # return HttpResponse("<h2>"+ str(result) +"</h2>")
+    ''' else :
+            print(subprocess.CalledProcessError)
+            print(compile_ouput)
+
+            f = open('output.txt','w')
+            f.write(compile_ouput)
+            f.close()
+            return HttpResponse("<h2>" + compile_ouput + "</h2>")'''
+
+
+def leaderboard(request, user_id):
+    current_user = User.objects.get(pk=user_id)
+    current_user.total_score = 0
+    jsonDec = json.decoder.JSONDecoder()
+    all_marks = list(jsonDec.decode(current_user.score))
+    for marks in all_marks:
+        current_user.total_score += marks
+    current_user.save()
+    all_user = list(User.objects.all().order_by('total_score'))
+    all_user.reverse()
+
+    if request.POST.get("finish"):
+
+        return render(request, 'round2/leaderboard.html',
+                      {'user_id': int(user_id), 'all_user': all_user, 'leaderboard_clicked': False})
+    elif request.POST.get("leader"):
+        return render(request, 'round2/leaderboard.html',
+                      {'user_id': int(user_id), 'all_user': all_user, 'leaderboard_clicked': True, 'one': 5, 'two': 5,
+                       'three': 10, 'four': 10, 'five': 20})
+    else:
+        return render(request, 'round2/leaderboard.html',
+                      {'user_id': int(user_id), 'all_user': all_user, 'leaderboard_clicked': False})
+
+
+def instruction_view(request, user_id):
+    return render(request, 'round2/instruction.html',
+                  {'user_id': user_id, 'one': 50, 'two': 50, 'three': 100, 'four': 100})
+
+
+def add_que(request, user_id):
+    user = User.objects.get(pk=user_id)
+    if request.POST.get("easy"):
+        user.buyed_questions += json.dumps(user.easy_counter)
+    return render(request, 'round2/select_questions.html',
+                  {'buyed_questions': '', 'user_id': user_id,
+                   })
+
+
+def buy_question(request, user_id, question_id):
+    user_id = int(user_id)
+    question_id = int(question_id)
+
+
+    current_user = User.objects.get(pk=user_id)
+    question = Question.objects.get(pk=question_id)
+
+
+    error_msg = "You don't have enough money"
+    previous_code = ""
+    if current_user.money >= question.cost:
+        print(question)
+        if question.type == "Easy" :
+            if current_user.easy_counter<3:
+                current_user.easy_counter+=1
+            else:
+                return HttpResponse("you cant buy more easy question")
+        else:
+            current_user.easy_counter-=3
+
+        current_user.money -= question.cost
+        current_user.save()
+        question.user.add(current_user)
+        question.save()
+        # a = question.user.all()
+
+
+        return HttpResponse("true")
+    else:
+        return HttpResponse(error_msg)
+    # return render(request, 'round2/question_details.html',
+    #               {'pegs_id': int("3"), 'selected_question': question, 'user_id': user_id,
+    #                'submitted_code': previous_code, 'remaining_time': current_user.end_time - time.time()})

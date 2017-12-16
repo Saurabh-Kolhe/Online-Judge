@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+
+    body {
+        background: #F3F3FF;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    table, th, td {
+
+        border-collapse: collapse;
+        background-color: #ffffff;
+
+        font-family: "Comic Sans MS";
+    }
+</style>
+<head>
+
+
+</head>
+<body>
+
+
+<!--ROUND 2-->
+<h1 STYLE="margin-left:10%; ">Problem Statements </h1>
+<div class="fixed">
+    <label type="label"
+           style="background-color:black;color:#F3F3F3;font-family:courier;font-size:300%;margin-top:-15px;  "
+           border="0"><b>
+        <span id="time1"></span></b>
+
+    </label>
+</div>
+<table style="margin-left:3%; width:75%; height:70%;">
+    <tr id="title" style=" font-weight: bold; font-size:145%;border:2px solid #E4E4E4;">
+        <th>Question No</th>
+        <th>DIFFICULTY</th>
+        <th>SOLVE PROBLEM</th>
+        <th>STATUS</th>
+        <th>COST</th>
+    </tr>
+    {% for question in question_list %}
+
+         <tr id="{{ forloop.counter }}" STYLE="border:1px solid #E4E4E4;">
+        <td>{{ forloop.counter }}</td>
+            <td>{{ question.difficulty }}</td>
+        <td><a href="{% url 'round2:question_details' user_id question.question.pk %}"
+               style=" font-size: 150%; text-align:left; margin-left:10%;">{{ question.question.question_title }}</a></td>
+        <td>{{ question.status }}</td>
+            <td>{{ question.cost }}</td>
+    {% endfor %}
+
+
+</body>
+</html>
