@@ -1,8 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="039fb828-f419-47f8-9e0a-9d63fbc072f8" name="Default" comment="">
+    <list default="true" id="039fb828-f419-47f8-9e0a-9d63fbc072f8" name="Default" comment="&#10;Initial commit">
+      <change beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3200dfc0-6498-4f40-b2c2-2fb15be26675.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/3200dfc0-6498-4f40-b2c2-2fb15be26675.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0001_initial.py" afterPath="$PROJECT_DIR$/round2/migrations/0001_initial.py" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0002_question_input.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0003_question_correct_op.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0004_auto_20170102_1653.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0005_auto_20170103_1026.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0006_auto_20170103_1028.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0007_auto_20170103_2216.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0008_auto_20170106_0647.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0009_auto_20170106_0656.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0010_auto_20170106_0700.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0011_auto_20170106_0857.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0012_user_money.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0013_user_buyed_questions.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0014_question_cost.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0015_question_user.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0016_auto_20171216_0825.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0017_remove_user_buyed_questions.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0018_question_type.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0019_user_easy_counter.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0020_auto_20171216_0956.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0021_auto_20171216_0957.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0022_auto_20171216_0957.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0023_auto_20171216_0957.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0024_auto_20171216_1001.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0025_auto_20171216_1002.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/migrations/0026_auto_20171216_1002.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/round2/models.py" afterPath="$PROJECT_DIR$/round2/models.py" />
       <change beforePath="$PROJECT_DIR$/round2/static/instruction.css" afterPath="$PROJECT_DIR$/round2/static/instruction.css" />
       <change beforePath="$PROJECT_DIR$/round2/templates/round2/instruction.html" afterPath="$PROJECT_DIR$/round2/templates/round2/instruction.html" />
       <change beforePath="$PROJECT_DIR$/round2/templates/round2/leaderboard.html" afterPath="$PROJECT_DIR$/round2/templates/round2/leaderboard.html" />
@@ -14,6 +44,7 @@
       <change beforePath="$PROJECT_DIR$/round2/templates/round2/select_questions.html" afterPath="$PROJECT_DIR$/round2/templates/round2/select_questions.html" />
       <change beforePath="$PROJECT_DIR$/round2/templates/round2/test.html" afterPath="$PROJECT_DIR$/round2/templates/round2/test.html" />
       <change beforePath="$PROJECT_DIR$/round2/urls.py" afterPath="$PROJECT_DIR$/round2/urls.py" />
+      <change beforePath="$PROJECT_DIR$/round2/views.py" afterPath="$PROJECT_DIR$/round2/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -58,11 +89,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/round2/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2630">
-              <caret line="269" column="40" lean-forward="false" selection-start-line="269" selection-start-column="40" selection-end-line="269" selection-end-column="40" />
+            <state relative-caret-position="108">
+              <caret line="72" column="24" lean-forward="true" selection-start-line="72" selection-start-column="24" selection-end-line="72" selection-end-column="24" />
               <folding>
                 <element signature="e#0#49#0" expanded="true" />
               </folding>
@@ -70,15 +101,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="select_questions.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/round2/templates/round2/select_questions.html">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/round2/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="810">
-              <caret line="45" column="30" lean-forward="false" selection-start-line="45" selection-start-column="30" selection-end-line="45" selection-end-column="30" />
-              <folding>
-                <element signature="n#STYLE#0;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#td#2;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="215">
+              <caret line="27" column="38" lean-forward="true" selection-start-line="27" selection-start-column="38" selection-end-line="27" selection-end-column="38" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -105,18 +133,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/round2/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-              <folding />
+      <file leaf-file-name="round2_score" pinned="false" current-in-tab="false">
+        <entry file="das://table:/f35ccbdf/3200dfc0-6498-4f40-b2c2-2fb15be26675/main.round2_score">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="round2_question_user" pinned="false" current-in-tab="false">
-        <entry file="das://table:/f35ccbdf/3200dfc0-6498-4f40-b2c2-2fb15be26675/main.round2_question_user">
+      <file leaf-file-name="round2_question" pinned="false" current-in-tab="false">
+        <entry file="das://table:/f35ccbdf/3200dfc0-6498-4f40-b2c2-2fb15be26675/main.round2_question">
           <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
             <state>
               <filtering enabled="true" />
@@ -136,7 +163,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>displ</find>
       <find>curr</find>
       <find>timer</find>
       <find>remai</find>
@@ -166,6 +192,7 @@
       <find>handle</find>
       <find>ajax</find>
       <find>buy</find>
+      <find>score</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -189,8 +216,9 @@
         <option value="$PROJECT_DIR$/round2/urls.py" />
         <option value="$PROJECT_DIR$/round2/templates/round2/select_questions.html" />
         <option value="$PROJECT_DIR$/round2/templates/round2/question_details.html" />
-        <option value="$PROJECT_DIR$/round2/views.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/round2/models.py" />
+        <option value="$PROJECT_DIR$/round2/views.py" />
       </list>
     </option>
   </component>
@@ -266,6 +294,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="Sqlite (Xerial)" />
+    <property name="ignore_missing_gitignore" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -464,7 +493,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513418760326</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="&#10;Initial commit">
+      <created>1513418890495</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1513418890495</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -473,23 +509,23 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4813084" sideWeight="0.50277555" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868218" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32866043" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32820514" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4813084" sideWeight="0.49722442" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2188739" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4813084" sideWeight="0.49722442" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2188739" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298969" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991454" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2015504" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40965733" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991454" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -501,38 +537,54 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Just a commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Just a commit" />
+    <MESSAGE value="&#10;Initial commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="&#10;Initial commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/round2/views.py</url>
-          <line>255</line>
+          <line>252</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/round2/views.py</url>
-          <line>256</line>
+          <line>253</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/round2/views.py</url>
-          <line>260</line>
+          <line>256</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/round2/views.py</url>
-          <line>272</line>
+          <line>268</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/round2/views.py</url>
-          <line>279</line>
+          <line>276</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/round2/views.py</url>
+          <line>258</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/round2/views.py</url>
+          <line>261</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/round2/views.py</url>
+          <line>263</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="9" />
+      <option name="time" value="12" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -556,20 +608,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/round2/templates/round2/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="7" lean-forward="false" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/round2/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="14" lean-forward="false" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cstorm2/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -809,13 +847,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://table:/f35ccbdf/3200dfc0-6498-4f40-b2c2-2fb15be26675/main.round2_question">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://table:/f35ccbdf/3200dfc0-6498-4f40-b2c2-2fb15be26675/main.round2_user">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -839,6 +870,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="das://table:/f35ccbdf/3200dfc0-6498-4f40-b2c2-2fb15be26675/main.round2_question_user">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/f35ccbdf/3200dfc0-6498-4f40-b2c2-2fb15be26675/main.round2_question">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/f35ccbdf/3200dfc0-6498-4f40-b2c2-2fb15be26675/main.round2_score">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/round2/templates/round2/question_details.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
@@ -846,23 +906,6 @@
           <folding>
             <element signature="n#script#3;n#!!top" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/round2/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2630">
-          <caret line="269" column="40" lean-forward="false" selection-start-line="269" selection-start-column="40" selection-end-line="269" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://table:/f35ccbdf/3200dfc0-6498-4f40-b2c2-2fb15be26675/main.round2_question_user">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
@@ -879,9 +922,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/round2/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        <state relative-caret-position="215">
+          <caret line="27" column="38" lean-forward="true" selection-start-line="27" selection-start-column="38" selection-end-line="27" selection-end-column="38" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/round2/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="72" column="24" lean-forward="true" selection-start-line="72" selection-start-column="24" selection-end-line="72" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

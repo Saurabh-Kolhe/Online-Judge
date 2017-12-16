@@ -30,7 +30,7 @@ class Question(models.Model):
     test_input = models.CharField(max_length=700)
     test_output = models.CharField(max_length=10000)
     cost = models.IntegerField()
-    users = models.ManyToManyField(User, null=True, through="Score")
+    user = models.ManyToManyField(User, null=True, through="Score")
     type = models.CharField(default="Easy", max_length=10)
 
     def __str__(self):

@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse
-from .models import User, Question
+from .models import User, Question, Score
 import subprocess
 import json
 import pyperclip
@@ -11,18 +11,18 @@ def question(request, user_id):
     all_questions = Question.objects.all()
     current_user = User.objects.get(pk=user_id)
     jsonDec = json.decoder.JSONDecoder()
-    all_marks = list(jsonDec.decode(current_user.score))
+    # all_marks = list(jsonDec.decode(current_user.score))
     current_user.total_score = 0
     temp = 0
-    for marks in all_marks:
-        temp += marks
+    # for marks in all_marks:
+    #     temp += marks
     question_list = []
     for questions in all_questions:
         if current_user in questions.user.all():
             question_list.append({"question": questions,
                                   "status": "bought",
                                   "cost": questions.cost,
-                                  "difficulty":questions.type})
+                                  "difficulty": questions.type})
         else:
             question_list.append({"question": questions,
                                   "status": "not bought",
@@ -37,9 +37,7 @@ def question(request, user_id):
     # return render(request, 'round2/questions_list.html', {'all_questions' : all_questions, 'user_id': user_id,'remaining_time':current_user.end_time-time.time(),'all_marks':all_marks ,'one':50,'two':50,'three':100,'four':100})
     return render(request, 'round2/select_questions.html',
                   {'buyed_questions': '', 'all_questions': all_questions, 'user_id': user_id,
-                   'remaining_time': current_user.end_time - time.time(),
-                   'all_marks': all_marks, 'one': 50, 'two': 50, 'three': 100,
-                   'four': 100, 'question_list': question_list})
+                   'remaining_time': current_user.end_time - time.time(), 'question_list': question_list})
 
 
 def register(request):
@@ -62,7 +60,7 @@ def create_user(request):
     new_user = User(login_name=team_name, phone_number1=mobile1, phone_number2=mobile2,
                     college_name1=college1,
                     college_name2=college2, user_name1=participant1, user_name2=participant2, email1=email1,
-                    email2=email2, score="[0, 0, 0, 0, 0]", end_time=(time.time() + (60 * 120)))
+                    email2=email2, end_time=(time.time() + (60 * 120)))
     print(new_user.end_time)
     new_user.save()
     # return question(request,new_user.pk)
@@ -81,9 +79,9 @@ def question_details(request, user_id, question_id):
 
     jsonDec = json.decoder.JSONDecoder()
     current_user.total_score = 0
-    all_marks = list(jsonDec.decode(current_user.score))
-    for marks in all_marks:
-        current_user.total_score += marks
+    # all_marks = list(jsonDec.decode(current_user.score))
+    # for marks in all_marks:
+    #     current_user.total_score += marks
     current_user.save()
     try:
         previous_code = open(str(question_id) + '_' + str(user_id) + '.cpp', 'r').read()
@@ -168,17 +166,17 @@ def handle_answer(request, user_id, question_id):
                 counter += 1
             print(code)
 
-            all_marks = list(jsonDec.decode(current_user.score))
-            if all_marks[int(question_id) - 1] < marks:
-                all_marks[int(question_id) - 1] = marks
-                current_user.score = json.dumps(all_marks)
+            # all_marks = list(jsonDec.decode(current_user.score))
+            # if all_marks[int(question_id) - 1] < marks:
+            #     all_marks[int(question_id) - 1] = marks
+            #     current_user.score = json.dumps(all_marks)
             current_user.save()
-            print(all_marks)
+            # print(all_marks)
 
             current_user.total_score = 0
-            all_marks = list(jsonDec.decode(current_user.score))
-            for marks in all_marks:
-                current_user.total_score += marks
+            # all_marks = list(jsonDec.decode(current_user.score))
+            # for marks in all_marks:
+            #     current_user.total_score += marks
             current_user.save()
             return render(request, 'round2/question_details.html',
                           {'pegs_id': int("3"), 'error_msg': False, 'submitted': True, 'one': 50, 'two': 50,
@@ -214,9 +212,9 @@ def leaderboard(request, user_id):
     current_user = User.objects.get(pk=user_id)
     current_user.total_score = 0
     jsonDec = json.decoder.JSONDecoder()
-    all_marks = list(jsonDec.decode(current_user.score))
-    for marks in all_marks:
-        current_user.total_score += marks
+    # all_marks = list(jsonDec.decode(current_user.score))
+    # for marks in all_marks:
+    #     current_user.total_score += marks
     current_user.save()
     all_user = list(User.objects.all().order_by('total_score'))
     all_user.reverse()
@@ -252,29 +250,28 @@ def buy_question(request, user_id, question_id):
     user_id = int(user_id)
     question_id = int(question_id)
 
-
     current_user = User.objects.get(pk=user_id)
     question = Question.objects.get(pk=question_id)
-
 
     error_msg = "You don't have enough money"
     previous_code = ""
     if current_user.money >= question.cost:
         print(question)
-        if question.type == "Easy" :
-            if current_user.easy_counter<3:
-                current_user.easy_counter+=1
+        if question.type == "Easy":
+            if current_user.easy_counter < 3:
+                current_user.easy_counter += 1
             else:
                 return HttpResponse("you cant buy more easy question")
         else:
-            current_user.easy_counter-=3
+            current_user.easy_counter -= 3
 
         current_user.money -= question.cost
         current_user.save()
-        question.user.add(current_user)
-        question.save()
+        score = Score(user_f=current_user,question_f=question)
+        score.save()
+        # question.user.add()
+        # question.save()
         # a = question.user.all()
-
 
         return HttpResponse("true")
     else:
