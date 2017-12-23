@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 
-<head>
+<head xmlns:position="http://www.w3.org/1999/xhtml">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet"
           href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css">
     <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
-{#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">#}
+    {#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">#}
     <title>C-Storm</title>
     <style>
         body {
@@ -22,9 +22,7 @@
 
         input[type="submit"], button {
             /* change these properties to whatever you want */
-            width = "50";
             margin-bottom: 5px;
-            height = "0.5";
             padding: 6px 17px;
             margin-left: 75%;
             font-size: 15px;
@@ -88,9 +86,7 @@
         }
 
         #text_area {
-        "white-space: pre; resize: none; width: 75 %; border: 0.5 px solid;
-            border-color: #E4E4E4;
-            background: #ffffff;
+        "white-space: pre; resize: none; width: 75 %; border: 0.5 px solid; border-color: #E4E4E4; background: #ffffff;
             margin-top: 0px;
             margin-left: 3%;
             margin-bottom: 2%;
@@ -112,12 +108,12 @@
         a:link {
 
             color: #33348e;
-            background-color: D1D0CE;
+            background-color: #D1D0CE;
             text-decoration: none;
         }
 
         a:visited {
-            color: 0 C090A;
+            color: #0C090A;
             background-color: transparent;
             text-decoration: none;
         }
@@ -140,9 +136,11 @@
 <body>
 {#<form action="{% url 'round2:buy_question' user_id selected_question.pk %}" method="post">#}
 {#    {% csrf_token %}#}
+{{ question_score }}
+
 {% if not bought %}
 
-<input type="submit" name="buy" value="buy" id="buy" onclick="buy_question()">
+    <input type="submit" name="buy" value="buy" id="buy" onclick="buy_question()">
 {% endif %}
 {#</form>#}
 <!--<input type="submit" name="all_problems" id="all_problems" value="All Problems">
@@ -150,9 +148,9 @@
 <a href="{% url 'round2:question' user_id %}" style=" font-size: 150%; ">Question List</a>
 <!--<a href="{% url 'round2:question' user_id %}">Question List</a>-->
 <div class="fixed">
-    <label type="label"
-           style="background-color:black;color:#F3F3F3;font-family:courier;font-size:300%;margin-top:-15px; " border="0"
-           position:fixed><b>
+    <label
+            style="background-color:black;color:#F3F3F3;font-family:serif;font-size:300%;margin-top:-15px; "
+    ><b>
         <span id="time1"></span></b>
 
     </label>
@@ -183,7 +181,8 @@
 
 </div>
 
-<form action="{% url 'round2:handle_answer' user_id selected_question.pk %}" method="post" onclick=codeGetter()>
+{% if bought %}
+<form action="{% url 'round2:handle_answer' user_id selected_question.pk %}" method="post">
     {% csrf_token %}
     <div id="code_editor" name="code_editor" style="margin-bottom: 0px; font-weight: bold; font-size:150%;">Code
         Editor
@@ -193,11 +192,11 @@
 
     <textarea id="text_area" name="text_area" rows="30" style="font-size:135%;">{{ submitted_code }}</textarea>
 
-    <input type="submit" name="submit" value="submit" id="submit">
+    <input type="submit" name="submit" value="submit" id="submit_code">
 
 
-    <textarea style="white-space: pre;" id="user_code" name="user_code" hidden></textarea>
 </form>
+{% endif %}
 
 <script>
     function prompt_user() {
@@ -210,7 +209,7 @@
 </script>
 
 
-
+ <button onclick="prompt_user()" style="margin-left:75%;">Finish</button>
 {% if submitted %}
 
     <div id="code_checker">
@@ -243,7 +242,7 @@
         </table>
 
     </div>
-    <button onclick="prompt_user()" style="margin-left:75%;">Finish</button>
+
     <script>
         //To go to test cases
         window.location.hash = '#code_checker';
@@ -263,12 +262,7 @@
 
 </body>
 
-<script>
 
-    function codeGetter() {
-        //document.getElementById("user_code").value =  document.getElementById("text_area").value
-    }
-</script>
 {% load static %}
 <script src="{% static 'codemirror.js' %}"></script>
 <link rel="stylesheet" href="{% static 'codemirror.css' %}">
@@ -327,7 +321,9 @@
 <script>
 
     function buy_question() {
+        {#alert(obj.id);#}
         $.ajax({
+
             type: "POST",
             url: '{% url 'round2:buy_question' user_id question_id  %}',
             data: {
@@ -344,7 +340,9 @@
                         lineNumbers: true,
                         indentUnit: 4
                     });
+
                     myCodeMirror.setSize(1000, 500);
+                    location.reload();
 
                 }
                 else {
@@ -354,8 +352,7 @@
         });
     }
 
-    //myCodeMirror.setValue = '{{submitted_code}}';
-
+    {#//myCodeMirror.setValue = '{{submitted_code}}'#}
 
 </script>
 

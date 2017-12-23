@@ -22,12 +22,14 @@ def question(request, user_id):
             question_list.append({"question": questions,
                                   "status": "bought",
                                   "cost": questions.cost,
-                                  "difficulty": questions.type})
+                                  "difficulty": questions.type,
+                                  "question_score":Score.objects.get(user_f=current_user,question_f=questions).score})
         else:
             question_list.append({"question": questions,
                                   "status": "not bought",
                                   "cost": questions.cost,
-                                  "difficulty": questions.type
+                                  "difficulty": questions.type,
+                                  "question_score":0
                                   })
 
     current_user.total_score = temp
@@ -37,7 +39,7 @@ def question(request, user_id):
     # return render(request, 'round2/questions_list.html', {'all_questions' : all_questions, 'user_id': user_id,'remaining_time':current_user.end_time-time.time(),'all_marks':all_marks ,'one':50,'two':50,'three':100,'four':100})
     return render(request, 'round2/select_questions.html',
                   {'buyed_questions': '', 'all_questions': all_questions, 'user_id': user_id,
-                   'remaining_time': current_user.end_time - time.time(), 'question_list': question_list})
+                   'remaining_time': current_user.end_time - time.time(), 'question_list': question_list,'money':current_user.money})
 
 
 def register(request):
@@ -137,7 +139,7 @@ def handle_answer(request, user_id, question_id):
             checker = [None] * len(input)
             for ii in input:
 
-                p = Popen(['a.exe'], shell=True, stdout=PIPE, stdin=PIPE)
+                p = Popen(['./a.out'], shell=True, stdout=PIPE, stdin=PIPE)
                 value = str(ii) + '\n'
                 value = bytes(value, 'UTF-8')  # Needed in Python 3.
 
@@ -166,23 +168,21 @@ def handle_answer(request, user_id, question_id):
                 counter += 1
             print(code)
 
-            # all_marks = list(jsonDec.decode(current_user.score))
-            # if all_marks[int(question_id) - 1] < marks:
-            #     all_marks[int(question_id) - 1] = marks
-            #     current_user.score = json.dumps(all_marks)
-            current_user.save()
-            # print(all_marks)
+            score_object =Score.objects.get(user_f=current_user,question_f=current_question);
+            if score_object.score < marks:
+                current_user.money+=(marks-score_object.score)
+                score_object.score = marks
+                score_object.save()
 
-            current_user.total_score = 0
             # all_marks = list(jsonDec.decode(current_user.score))
-            # for marks in all_marks:
-            #     current_user.total_score += marks
+            current_user.total_score=sum(Score.objects.filter(user_f=current_user).values_list('score',flat=True))
             current_user.save()
             return render(request, 'round2/question_details.html',
                           {'pegs_id': int("3"), 'error_msg': False, 'submitted': True, 'one': 50, 'two': 50,
                            'three': 100, 'four': 100, 'submitted_code': code, 'selected_question': current_question,
                            'user_id': user_id, 'checker': checker,
-                           'remaining_time': current_user.end_time - time.time()})
+                           'remaining_time': current_user.end_time - time.time(),
+                           'bought':True,'question_id':question_id,'question_score':score_object.score})
         else:
             print(subprocess.CalledProcessError)
             # print(compile_ouput)
@@ -196,7 +196,7 @@ def handle_answer(request, user_id, question_id):
                            'selected_question': current_question,
                            'user_id': user_id, 'checker': False,
                            'remaining_time': current_user.end_time - time.time(), 'error_msg': str(compile_ouput)
-                           ,"question_id": question_id})
+                           ,"question_id": question_id,'bought':True})
 
         # return HttpResponse("<h2>"+ str(result) +"</h2>")
     ''' else :
@@ -211,13 +211,13 @@ def handle_answer(request, user_id, question_id):
 
 def leaderboard(request, user_id):
     current_user = User.objects.get(pk=user_id)
-    current_user.total_score = 0
-    jsonDec = json.decoder.JSONDecoder()
+    # current_user.total_score = 0
+    # jsonDec = json.decoder.JSONDecoder()
     # all_marks = list(jsonDec.decode(current_user.score))
     # for marks in all_marks:
     #     current_user.total_score += marks
-    current_user.save()
-    all_user = list(User.objects.all().order_by('total_score'))
+    # current_user.save()
+    all_user = list(User.objects.all().order_by('money'))
     all_user.reverse()
 
     if request.POST.get("finish"):

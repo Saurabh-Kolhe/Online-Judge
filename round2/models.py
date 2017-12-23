@@ -40,4 +40,4 @@ class Question(models.Model):
 class Score(models.Model):
     user_f = models.ForeignKey(User)
     question_f = models.ForeignKey(Question)
-    score = models.IntegerField(default=10)
+    score = models.IntegerField(default=0)
