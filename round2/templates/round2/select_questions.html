@@ -49,7 +49,7 @@
     </tr>
     {% for question in question_list %}
 
-        <tr id="{{ forloop.counter }}" STYLE="border:1px solid #E4E4E4;">
+        <tr id="{{ forloop.counter }}">
         <td>{{ forloop.counter }}</td>
         <td>{{ question.difficulty }}</td>
         <td><a href="{% url 'round2:question_details' user_id question.question.pk %}"
@@ -112,3 +112,6 @@
 
 </script>
 </html>
+
+
+

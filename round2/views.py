@@ -37,13 +37,13 @@ def question(request, user_id):
     print(current_user.total_score)
 
     # return render(request, 'round2/questions_list.html', {'all_questions' : all_questions, 'user_id': user_id,'remaining_time':current_user.end_time-time.time(),'all_marks':all_marks ,'one':50,'two':50,'three':100,'four':100})
-    return render(request, 'round2/select_questions.html',
+    return render(request, 'round2/select_questions_new.html',
                   {'buyed_questions': '', 'all_questions': all_questions, 'user_id': user_id,
                    'remaining_time': current_user.end_time - time.time(), 'question_list': question_list,'money':current_user.money})
 
 
 def register(request):
-    return render(request, 'round2/register.html', {})
+    return render(request, 'round2/register_new.html', {})
 
 
 def create_user(request):
@@ -222,19 +222,19 @@ def leaderboard(request, user_id):
 
     if request.POST.get("finish"):
 
-        return render(request, 'round2/leaderboard.html',
+        return render(request, 'round2/leaderboard_new.html',
                       {'user_id': int(user_id), 'all_user': all_user, 'leaderboard_clicked': False})
     elif request.POST.get("leader"):
-        return render(request, 'round2/leaderboard.html',
+        return render(request, 'round2/leaderboard_new.html',
                       {'user_id': int(user_id), 'all_user': all_user, 'leaderboard_clicked': True, 'one': 5, 'two': 5,
                        'three': 10, 'four': 10, 'five': 20})
     else:
-        return render(request, 'round2/leaderboard.html',
+        return render(request, 'round2/leaderboard_new.html',
                       {'user_id': int(user_id), 'all_user': all_user, 'leaderboard_clicked': False})
 
 
 def instruction_view(request, user_id):
-    return render(request, 'round2/instruction.html',
+    return render(request, 'round2/instructions_new.html',
                   {'user_id': user_id, 'one': 50, 'two': 50, 'three': 100, 'four': 100})
 
 

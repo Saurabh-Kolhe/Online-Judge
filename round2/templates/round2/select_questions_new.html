@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Questions</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>C - Storm</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:900" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet"
+          href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css">
+    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        .leader {
+            background: whitesmoke;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="row">
+        <div STYLE="text-align: center; font-weight: bolder" class="col-md-4 col-md-offset-4">
+            <H3>Problem Statements</H3>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <label>
+            <b>
+                <H3>Time Left:
+                    <span id="time1"></span>
+                </H3>
+            </b>
+
+        </label>
+        </div>
+        <div class="col-md-4 col-md-offset-8">
+
+            <form action="{% url 'round2:leaderboard' user_id %}" method="post">
+                {% csrf_token %}
+                <div class="col-md-offset-5">
+                    <input class="btn" type="submit" name="leader" id="leader" value="View Leaderboard">
+                    <input type="button" class="btn btn-danger" onclick="prompt_user()" value="Finish">
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+    <div class="row">
+
+
+    </div>
+
+<br>
+    <div class="row leader">
+        <div class="table-responsive">
+            <table class="table table-bordered white">
+                <thead class="thead-inverse">
+                <tr>
+                    <th>Question No</th>
+                    <th>Difficulty</th>
+                    <th>Solve Problem</th>
+                    <th>Status</th>
+                    <th>Cost</th>
+                    <th>Marks</th>
+                </tr>
+                </thead>
+                <tbody id="table_body">
+                {% for question in question_list %}
+
+                    <tr id="{{ forloop.counter }}">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ question.difficulty }}</td>
+                        <td><a href="{% url 'round2:question_details' user_id question.question.pk %}"
+                               style=" font-size: 150%; text-align:left; margin-left:10%;">{{ question.question.question_title }}</a>
+                        </td>
+                        <td>{{ question.status }}</td>
+                        <td>{{ question.cost }}</td>
+                        <td>{{ question.question_score }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+</body>
+<script type="text/javascript">
+
+    function startTimer(duration, display) {
+        var start = Date.now(),
+
+            diff,
+            minutes,
+            seconds;
+
+        function timer() {
+            // get the number of seconds that have elapsed since
+            // startTimer() was called
+            diff = duration - (((Date.now() - start) / 1000) | 0);
+
+            // does the same job as parseInt truncates the float
+            hours = (diff / 3600) | 0;
+            minutes = ((diff / 60) % 60) | 0;
+            seconds = (diff % 60) | 0;
+            hours = hours < 10 ? "0" + hours : hours;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = hours + ":" + minutes + ":" + seconds;
+
+
+            if (diff <= 0) {
+                // add one second so that the count down starts at the full duration
+                // example 05:00 not 04:59
+                // start = Date.now() + 1000;
+                // window.location.replace("http:/comp/leaderboard/" );
+                window.location.replace(" {%url 'round2:leaderboard' user_id %}");
+            }
+
+        };
+        // we don't want to wait a full second before the timer starts
+        timer();
+        setInterval(timer, 1000);
+    }
+
+    window.onload = function () {
+        var v = "{{remaining_time}}";
+
+        display = document.querySelector('#time1');
+        startTimer(v, display);
+    };
+
+</script>
+
+</html>
