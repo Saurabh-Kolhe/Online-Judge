@@ -1,4 +1,3 @@
-1_4.cpp: In function ‘int main()’:
-1_4.cpp:5:7: error: ‘hello’ was not declared in this scope
- cout<<hello
-       ^
+2_14.cpp:1:1: error: ‘ukuk’ does not name a type
+ ukuk
+ ^
