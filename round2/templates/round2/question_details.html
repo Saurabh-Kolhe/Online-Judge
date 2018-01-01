@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 
 <head xmlns:position="http://www.w3.org/1999/xhtml">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EarnCode</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:900" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet"
           href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css">
     <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
-    {#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">#}
-    <title>C-Storm</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <title>Earn Code</title>
     <style>
         body {
             background: #F3F3FF;
@@ -22,15 +30,7 @@
 
         input[type="submit"], button {
             /* change these properties to whatever you want */
-            margin-bottom: 5px;
-            padding: 6px 17px;
-            margin-left: 75%;
-            font-size: 15px;
-            text-align: center;
-            cursor: pointer;
-            background-color: #6D6968;
-            color: #fff;
-            border-radius: 4px;
+        {#margin-bottom: 5px;#}{#padding: 6px 17px;#}{#font-size: 15px;#}{#text-align: center;#}{#cursor: pointer;#}{#background-color: #6D6968;#}{#color: #fff;#}{#border-radius: 4px;#}
 
         }
 
@@ -49,22 +49,18 @@
         }
 
         #question, #problem_title {
-            width: 75%;
+            width: 100%;
             border: 0.5px solid;
             border-color: #E4E4E4;
             background: #ffffff;
-            margin-left: 3%;
-            margin-bottom: 2%;
             padding: 1%;
         }
 
         #code_editor, #message_display {
-            width: 75%;
+            width: 100%;
             border: 0.5px solid;
             border-color: #E4E4E4;
             background: #ffffff;
-            margin-left: 3%;
-            margin-bottom: 2%;
             padding: 1%;
         }
 
@@ -86,12 +82,10 @@
         }
 
         #text_area {
-        "white-space: pre; resize: none; width: 75 %; border: 0.5 px solid; border-color: #E4E4E4; background: #ffffff;
-            margin-top: 0px;
-            margin-left: 3%;
             margin-bottom: 2%;
             font-size: 1.2em;
             padding: 1%;
+            width: 100%;
         }
 
         table, th, td {
@@ -134,32 +128,29 @@
 
 </head>
 <body>
-{#<form action="{% url 'round2:buy_question' user_id selected_question.pk %}" method="post">#}
-{#    {% csrf_token %}#}
-{{ question_score }}
-
-{% if not bought %}
-
-    <input type="submit" name="buy" value="buy" id="buy" onclick="buy_question()">
-{% endif %}
-{#</form>#}
-<!--<input type="submit" name="all_problems" id="all_problems" value="All Problems">
+<div class="container">
+    {#<form action="{% url 'round2:buy_question' user_id selected_question.pk %}" method="post">#}
+    {#    {% csrf_token %}#}
+    {{ question_score }}
+    {#</form>#}
+    <!--<input type="submit" name="all_problems" id="all_problems" value="All Problems">
 <a target="_blank" href="{% url 'round2:question' user_id %}" class="regular float-left registered-event-right-panel">-->
-<a href="{% url 'round2:question' user_id %}" style=" font-size: 150%; ">Question List</a>
-<!--<a href="{% url 'round2:question' user_id %}">Question List</a>-->
-<div class="fixed">
-    <label
-            style="background-color:black;color:#F3F3F3;font-family:serif;font-size:300%;margin-top:-15px; "
-    ><b>
-        <span id="time1"></span></b>
+    <div class="row">
+        <div class="col-md-4">
+            <a href="{% url 'round2:question' user_id %}"><h3>&lt; Question List</h3></a>
+        </div>
+        <div class="col-md-4 col-md-offset-4 text-right" style="padding-right: 10%; ">
+            <div class="row" style="margin-bottom: -20px;"><span>Time Left</span></div>
+            <div class="row">
+                <h1><span id="time1"></span></h1></div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="problem_title" class="row" style="margin-bottom: 0px; font-weight: bold;font-size:150%; ">Problem
+            Statement
+        </div>
 
-    </label>
-</div>
-<div id="problem_title" style="margin-bottom: 0px; font-weight: bold;font-size:150%; ">Problem Statement
-</div>
-
-
-<div id="question" style="font-size:140%;">
+        <div id="question" class="row" style="font-size:140%;">
 
 <pre>{{ selected_question.question }}
 <table style="width:50%">
@@ -179,24 +170,102 @@
 </pre>
 
 
-</div>
-
-{% if bought %}
-<form action="{% url 'round2:handle_answer' user_id selected_question.pk %}" method="post">
-    {% csrf_token %}
-    <div id="code_editor" name="code_editor" style="margin-bottom: 0px; font-weight: bold; font-size:150%;">Code
-        Editor
+        </div>
     </div>
-    <!--<div id="text_area" name="text_area" style="margin-top: 0px;" ></div>
-    .innerHTML-->
 
-    <textarea id="text_area" name="text_area" rows="30" style="font-size:135%;">{{ submitted_code }}</textarea>
+    <div class="row">
+        {% if bought %}
+            <form action="{% url 'round2:handle_answer' user_id selected_question.pk %}" method="post">
+                {% csrf_token %}
+                <div id="code_editor" name="code_editor" style="margin-bottom: 0px; font-weight: bold; font-size:150%;">
+                    Code
+                    Editor
+                </div>
+                <!--<div id="text_area" name="text_area" style="margin-top: 0px;" ></div>
+                .innerHTML-->
 
-    <input type="submit" name="submit" value="submit" id="submit_code">
+                <textarea id="text_area" name="text_area" rows="30"
+                          style="font-size:135%;">{{ submitted_code }}</textarea>
+
+                <input class="btn btn-success" type="submit" name="submit" value="submit" id="submit_code">
 
 
-</form>
-{% endif %}
+            </form>
+        {% endif %}
+        <br>
+        <div class="row">
+            {% if not bought %}
+                <div class="col-md-2 col-md-offset-5">
+                    <input class="btn" type="submit" name="buy" value="buy" id="buy" onclick="buy_question()">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-danger" onclick="prompt_user()" >Finish</button>
+                </div>
+            {% else %}
+                <div class="col-md-1">
+                    <button class="btn btn-danger" onclick="prompt_user()" >Finish</button>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+    {% if submitted %}
+
+        <div id="code_checker">
+            <table style="width:100%">
+                <tr>
+                    <th></th>
+                    <th style="font-size:175%;">Input</th>
+
+                    <th style="font-size:175%;">Marks</th>
+                </tr>
+                {% for answer in checker %}
+                    <tr>
+
+                        {% if answer %}
+                            <td style="background-color:#00ff00; width:5%;padding:5px ;border:25px solid white "></td>
+                        {% else %}
+                            <td style="background-color:#ff0000; width:5%; padding:5px;border:25px solid white"></td>
+                        {% endif %}
+                        <td style="padding:20px; width:60%">Input{{ forloop.counter }}</td>
+                        <td>
+                            {% if answer %}
+                                2
+
+                            {% else %}
+                                0
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+        </div>
+
+        <script>
+            //To go to test cases
+            window.location.hash = '#code_checker';
+
+        </script>
+    {% endif %}
+    {% if error_msg %}
+        <div id="message_display">{{ error_msg }}
+        </div>
+        <script>
+            //To go to test cases
+            window.location.hash = '#message_display';
+
+        </script>
+    {% endif %}
+</div>
+</body>
+
+
+{% load static %}
+<script src="{% static 'codemirror.js' %}"></script>
+<link rel="stylesheet" href="{% static 'codemirror.css' %}">
+<script src="{% static 'clike.js' %}"></script>
+<!-- timer -->
 
 <script>
     function prompt_user() {
@@ -207,69 +276,6 @@
         }
     }
 </script>
-
-
- <button onclick="prompt_user()" style="margin-left:75%;">Finish</button>
-{% if submitted %}
-
-    <div id="code_checker">
-        <table style="width:100%">
-            <tr>
-                <th></th>
-                <th style="font-size:175%;">Input</th>
-
-                <th style="font-size:175%;">Marks</th>
-            </tr>
-            {% for answer in checker %}
-                <tr>
-
-                    {% if answer %}
-                        <td style="background-color:#00ff00; width:5%;padding:5px ;border:25px solid white "></td>
-                    {% else %}
-                        <td style="background-color:#ff0000; width:5%; padding:5px;border:25px solid white"></td>
-                    {% endif %}
-                    <td style="padding:20px; width:60%">Input{{ forloop.counter }}</td>
-                    <td>
-                        {% if answer %}
-                            2
-
-                        {% else %}
-                            0
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
-
-    </div>
-
-    <script>
-        //To go to test cases
-        window.location.hash = '#code_checker';
-
-    </script>
-{% endif %}
-{% if error_msg %}
-    <div id="message_display">{{ error_msg }}
-    </div>
-    <script>
-        //To go to test cases
-        window.location.hash = '#message_display';
-
-    </script>
-{% endif %}
-
-
-</body>
-
-
-{% load static %}
-<script src="{% static 'codemirror.js' %}"></script>
-<link rel="stylesheet" href="{% static 'codemirror.css' %}">
-<script src="{% static 'clike.js' %}"></script>
-<!-- timer -->
-
-
 <script type="text/javascript">
 
     function startTimer(duration, display) {

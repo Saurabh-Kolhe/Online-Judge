@@ -36,18 +36,19 @@
         </div>
     </div>
     <div class="row">
-        <div>
+        <div class="col-md-4">
             <label>
-            <b>
-                <H3>Time Left:
-                    <span id="time1"></span>
-                </H3>
-            </b>
+                    <H3>Time Left:
+                        <span id="time1"></span>
+                    </H3>
 
-        </label>
+            </label>
         </div>
-        <div class="col-md-4 col-md-offset-8">
+        <div class="col-md-4 text-right">
+            <h3>Wallet: {{ money }}</h3>
 
+        </div>
+        <div class="col-md-4" style="margin-top: 12px">
             <form action="{% url 'round2:leaderboard' user_id %}" method="post">
                 {% csrf_token %}
                 <div class="col-md-offset-5">
@@ -56,15 +57,15 @@
                 </div>
 
             </form>
-
         </div>
+
     </div>
     <div class="row">
 
 
     </div>
 
-<br>
+    <br>
     <div class="row leader">
         <div class="table-responsive">
             <table class="table table-bordered white">
