@@ -5,6 +5,7 @@ import json
 import pyperclip
 from subprocess import Popen, PIPE
 import time
+import threading
 
 
 def question(request, user_id):
@@ -23,13 +24,13 @@ def question(request, user_id):
                                   "status": "bought",
                                   "cost": questions.cost,
                                   "difficulty": questions.type,
-                                  "question_score":Score.objects.get(user_f=current_user,question_f=questions).score})
+                                  "question_score": Score.objects.get(user_f=current_user, question_f=questions).score})
         else:
             question_list.append({"question": questions,
                                   "status": "not bought",
                                   "cost": questions.cost,
                                   "difficulty": questions.type,
-                                  "question_score":0
+                                  "question_score": 0
                                   })
 
     current_user.total_score = temp
@@ -39,7 +40,8 @@ def question(request, user_id):
     # return render(request, 'round2/questions_list.html', {'all_questions' : all_questions, 'user_id': user_id,'remaining_time':current_user.end_time-time.time(),'all_marks':all_marks ,'one':50,'two':50,'three':100,'four':100})
     return render(request, 'round2/select_questions_new.html',
                   {'buyed_questions': '', 'all_questions': all_questions, 'user_id': user_id,
-                   'remaining_time': current_user.end_time - time.time(), 'question_list': question_list,'money':current_user.money})
+                   'remaining_time': current_user.end_time - time.time(), 'question_list': question_list,
+                   'money': current_user.money})
 
 
 def register(request):
@@ -123,9 +125,11 @@ def handle_answer(request, user_id, question_id):
                        'user_id': user_id})'''
         t = 0
         # from subprocess import CalledProcessError, check_output
-        compile_ouput = subprocess.getoutput('g++ ' + str(question_id) + '_' + str(user_id) + '.cpp')
+        compile_ouput = subprocess.getoutput(
+            'g++ ' + str(question_id) + '_' + str(user_id) + '.cpp -o ' + str(question_id) + '_' + str(user_id))
         marks = 0
         current_user = User.objects.get(pk=user_id)
+        # Successfully complied
         if not compile_ouput:
             print('compiled')
             '''f = open('output.txt', 'w')
@@ -139,7 +143,7 @@ def handle_answer(request, user_id, question_id):
             checker = [None] * len(input)
             for ii in input:
 
-                p = Popen(['./a.out'], shell=True, stdout=PIPE, stdin=PIPE)
+                p = Popen(['./' + str(question_id) + '_' + str(user_id) + '.out'], shell=True, stdout=PIPE, stdin=PIPE)
                 value = str(ii) + '\n'
                 value = bytes(value, 'UTF-8')  # Needed in Python 3.
 
@@ -168,21 +172,21 @@ def handle_answer(request, user_id, question_id):
                 counter += 1
             print(code)
 
-            score_object =Score.objects.get(user_f=current_user,question_f=current_question);
+            score_object = Score.objects.get(user_f=current_user, question_f=current_question)
             if score_object.score < marks:
-                current_user.money+=(marks-score_object.score)
+                current_user.money += (marks - score_object.score)
                 score_object.score = marks
                 score_object.save()
 
             # all_marks = list(jsonDec.decode(current_user.score))
-            current_user.total_score=sum(Score.objects.filter(user_f=current_user).values_list('score',flat=True))
+            current_user.total_score = sum(Score.objects.filter(user_f=current_user).values_list('score', flat=True))
             current_user.save()
             return render(request, 'round2/question_details.html',
                           {'pegs_id': int("3"), 'error_msg': False, 'submitted': True, 'one': 50, 'two': 50,
                            'three': 100, 'four': 100, 'submitted_code': code, 'selected_question': current_question,
                            'user_id': user_id, 'checker': checker,
                            'remaining_time': current_user.end_time - time.time(),
-                           'bought':True,'question_id':question_id,'question_score':score_object.score})
+                           'bought': True, 'question_id': question_id, 'question_score': score_object.score})
         else:
             print(subprocess.CalledProcessError)
             # print(compile_ouput)
@@ -196,10 +200,10 @@ def handle_answer(request, user_id, question_id):
                            'selected_question': current_question,
                            'user_id': user_id, 'checker': False,
                            'remaining_time': current_user.end_time - time.time(), 'error_msg': str(compile_ouput)
-                           ,"question_id": question_id,'bought':True})
+                              , "question_id": question_id, 'bought': True})
 
         # return HttpResponse("<h2>"+ str(result) +"</h2>")
-    ''' else :
+    ''' else :.
             print(subprocess.CalledProcessError)
             print(compile_ouput)
 
@@ -268,7 +272,7 @@ def buy_question(request, user_id, question_id):
 
         current_user.money -= question.cost
         current_user.save()
-        score = Score(user_f=current_user,question_f=question)
+        score = Score(user_f=current_user, question_f=question)
         score.save()
         # question.user.add()
         # question.save()
@@ -280,3 +284,7 @@ def buy_question(request, user_id, question_id):
     # return render(request, 'round2/question_details.html',
     #               {'pegs_id': int("3"), 'selected_question': question, 'user_id': user_id,
     #                'submitted_code': previous_code, 'remaining_time': current_user.end_time - time.time()})
+
+
+def run_code(p,input):
+    print('starting thread')
