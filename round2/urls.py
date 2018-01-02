@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^buy_question/(?P<user_id>[0-9]+)/(?P<question_id>[0-9]+)/$', views.buy_question, name='buy_question'),
     url(r'^leaderboard/(?P<user_id>[0-9]+)/$', views.leaderboard, name='leaderboard'),
     url(r'^instruction_view/(?P<user_id>[0-9]+)/$', views.instruction_view, name='instruction_view'),
+
 ]
