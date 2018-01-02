@@ -10,7 +10,7 @@
         <property name="enable_load_extension" value="true" />
       </driver-properties>
     </data-source>
-    <data-source source="LOCAL" name="Django default" uuid="064fa03b-5b59-40ca-8890-9c567f06e420">
+    <data-source source="LOCAL" name="Django default" uuid="d48ffc35-d5fb-4ab3-9f09-0893fce7e809">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
