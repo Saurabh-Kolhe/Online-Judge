@@ -3,24 +3,24 @@
 {% load staticfiles %}
 <head xmlns:position="http://www.w3.org/1999/xhtml">
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>EarnCode</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Merriweather:900" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="{% static '/css/font.css' %}" rel="stylesheet">
+    <script src="{% static '/js/jquery.min.js' %}"></script>
     <link rel="stylesheet"
-          href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css">
-    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+          href="{% static '/css/jquery-ui.min.css' %}">
+    <script src="{% static '/js/jquery-ui.min.js' %}"></script>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
 
+
+    <script src="{% static '/js/bootstrap.min.js' %}"></script>
     <title>Earn Code</title>
     <style>
         body {
-            background: #F3F3FF;
             font-family: Arial, Helvetica, sans-serif;
         }
 
@@ -58,7 +58,7 @@
         }
 
         #code_editor, #message_display {
-            width: 100%;
+            width: 97.45%;
             border: 0.5px solid;
             border-color: #E4E4E4;
             background: #ffffff;
@@ -86,7 +86,7 @@
             margin-bottom: 2%;
             font-size: 1.2em;
             padding: 1%;
-            width: 100%;
+            width: 97.45%;
         }
 
         table, th, td {
@@ -143,152 +143,230 @@
 
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
 
-    {{ question_score }}
 
-{{ question_score }}
-
-{% if not bought %}
-    <div id="overlay">
-        <div class="showbox">
-            <div class="loader">
-                <svg class="circular" viewBox="25 25 50 50">
-                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2"
-                            stroke-miterlimit="10">
-                    </circle>
-                </svg>
+    {% if not bought %}
+        <div id="overlay">
+            <div class="showbox">
+                <div class="loader">
+                    <svg class="circular" viewBox="25 25 50 50">
+                        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2"
+                                stroke-miterlimit="10">
+                        </circle>
+                    </svg>
+                </div>
             </div>
         </div>
-    </div>
-    <input type="submit" name="buy" value="buy" id="buy" onclick="buy_question()">
-{% endif %}
-{#</form>#}
-<!--<input type="submit" name="all_problems" id="all_problems" value="All Problems">
+    {% endif %}
+    {#</form>#}
+    <!--<input type="submit" name="all_problems" id="all_problems" value="All Problems">
 <a target="_blank" href="{% url 'round2:question' user_id %}" class="regular float-left registered-event-right-panel">-->
-    <div class="row">
-        <div class="col-md-4">
-            <a href="{% url 'round2:question' user_id %}"><h3>&lt; Question List</h3></a>
-        </div>
-        <div class="col-md-4 col-md-offset-4 text-right" style="padding-right: 10%; ">
-            <div class="row" style="margin-bottom: -20px;"><span>Time Left</span></div>
-            <div class="row">
-                <h1><span id="time1"></span></h1></div>
+    {#    <div class="row">#}
+    {#        <div class="col-md-4">#}
+    {#            <a href="{% url 'round2:question' user_id %}"><h3>&lt; Question List</h3></a>#}
+    {#        </div>#}
+    {#        <div class="col-md-4 col-md-offset-4 text-right" style="padding-right: 10%; ">#}
+    {#            <div class="row" style="margin-bottom: -20px;"><span>Time Left</span></div>#}
+    {#            <div class="row">#}
+    {#                <h1><span id="time1"></span></h1></div>#}
+    {#        </div>#}
+    {#    </div>#}
+    {#    <div class="row">#}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+
+                <img alt="EarnCode"
+                     src="{% static '/round2/images/ea.png' %}" width="100%">
+
+            </div>
+            <div class="col-md-4">
+                <h2 style="margin-top: 60px;">Earn Code Round #2</h2>
+            </div>
+            <div class="col-md-2 col-md-offset-1">
+                <div class="row"><h4 style="margin-top: 30px; margin-bottom: -5px;">WALLET BALANCE</h4></div>
+                <div class="row text-center"><h2><span id="">&#8377; {{ money }}</span></h2></div>
+            </div>
+            <div class="col-md-2 col-md-offset-1 text-right">
+                <div class="row"><h4 style="margin-top: 30px; margin-bottom: -5px;">TIME</h4></div>
+                <div class="row"><h2><span id="time1">time</span></h2></div>
+            </div>
+
         </div>
     </div>
-    <div class="row">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+
+                    <li id="instruction_tab"><a onclick="showInstructions();">Instructions</a></li>
+                    <li><a href= {% url 'round2:question' user_id %}>Question list</a>
+                    <li class="active" id="question_tab"><a onclick="showCurrentQuestion()">Current Question</a>
+                    </li>
+
+                </ul>
+
+                <form action="{% url 'round2:leaderboard' user_id %}" method="post" class="navbar-form navbar-right"
+                      style="margin-bottom: -8px;margin-top: 1px;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-default navbar-btn" id="leader" name="leader">View
+                        Leaderboard
+                    </button>
+                    <button type="button" class="btn btn-default navbar-btn btn-danger" onclick="prompt_user()">
+                        Finish
+                    </button>
+
+                </form>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container" id="question_view">
         <div id="problem_title" class="row" style="margin-bottom: 0px; font-weight: bold;font-size:150%; ">Problem
             Statement
         </div>
 
         <div id="question" class="row" style="font-size:140%;">
 
-<pre>{{ selected_question.question }}
-<table style="width:50%">
-  <tr>
-    <th>Test input</th>
-    <th>output</th>
-  </tr>
-  <tr>
+        <pre>{{ selected_question.question }}
+        <table style="width:50%">
+          <tr>
+            <th>Test input</th>
+            <th>output</th>
+          </tr>
+          <tr>
 
 
-    <td rowspan="2">{{ selected_question.test_input }}</td>
-    <td rowspan="2">{{ selected_question.test_output }}</td>
-  </tr>
+            <td rowspan="2">{{ selected_question.test_input }}</td>
+            <td rowspan="2">{{ selected_question.test_output }}</td>
+          </tr>
 
 
-</table>
-</pre>
+        </table>
+        </pre>
 
 
+            {#    </div>#}
         </div>
-    </div>
 
-    <div class="row">
-        {% if bought %}
-            <form action="{% url 'round2:handle_answer' user_id selected_question.pk %}" method="post">
-                {% csrf_token %}
-                <div id="code_editor" name="code_editor" style="margin-bottom: 0px; font-weight: bold; font-size:150%;">
-                    Code
-                    Editor
-                </div>
-                <!--<div id="text_area" name="text_area" style="margin-top: 0px;" ></div>
-                .innerHTML-->
-
-                <textarea id="text_area" name="text_area" rows="30"
-                          style="font-size:135%;">{{ submitted_code }}</textarea>
-
-                <input class="btn btn-success" type="submit" name="submit" value="submit" id="submit_code">
-
-
-            </form>
-        {% endif %}
-        <br>
         <div class="row">
-            {% if not bought %}
-                <div class="col-md-2 col-md-offset-5">
-                    <input class="btn" type="submit" name="buy" value="buy" id="buy" onclick="buy_question()">
-                </div>
-                <div class="col-md-2">
-                    <button class="btn btn-danger" onclick="prompt_user()" >Finish</button>
-                </div>
-            {% else %}
-                <div class="col-md-1">
-                    <button class="btn btn-danger" onclick="prompt_user()" >Finish</button>
-                </div>
+            {% if bought %}
+                <form action="{% url 'round2:handle_answer' user_id selected_question.pk %}" method="post">
+                    {% csrf_token %}
+                    <div id="code_editor" name="code_editor"
+                         style="margin-bottom: 0px; font-weight: bold; font-size:150%;">
+                        Code
+                        Editor
+                    </div>
+                    <!--<div id="text_area" name="text_area" style="margin-top: 0px;" ></div>
+                    .innerHTML-->
+
+                    <textarea id="text_area" name="text_area" rows="30"
+                              style="font-size:135%;">{{ submitted_code }}</textarea>
+
+                    <input class="btn btn-success" type="submit" name="submit" value="submit" id="submit_code">
+
+
+                </form>
             {% endif %}
+            <br>
+            <div class="row">
+                {% if not bought %}
+                    <div class="col-md-2 col-md-offset-5">
+                        <input class="btn" type="submit" name="buy" value="buy" id="buy" onclick="buy_question()">
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-danger" onclick="prompt_user()">Finish</button>
+                    </div>
+                {% else %}
+                    <div class="col-md-1">
+                        <button class="btn btn-danger" onclick="prompt_user()">Finish</button>
+                    </div>
+                {% endif %}
 
+            </div>
         </div>
-    </div>
-    {% if submitted %}
+        {% if submitted %}
 
-        <div id="code_checker">
-            <table style="width:100%">
-                <tr>
-                    <th></th>
-                    <th style="font-size:175%;">Input</th>
-
-                    <th style="font-size:175%;">Marks</th>
-                </tr>
-                {% for answer in checker %}
+            <div id="code_checker">
+                <table style="width:100%">
                     <tr>
+                        <th></th>
+                        <th style="font-size:175%;">Input</th>
 
-                        {% if answer %}
-                            <td style="background-color:#00ff00; width:5%;padding:5px ;border:25px solid white "></td>
-                        {% else %}
-                            <td style="background-color:#ff0000; width:5%; padding:5px;border:25px solid white"></td>
-                        {% endif %}
-                        <td style="padding:20px; width:60%">Input{{ forloop.counter }}</td>
-                        <td>
-                            {% if answer %}
-                                2
-
-                            {% else %}
-                                0
-                            {% endif %}
-                        </td>
+                        <th style="font-size:175%;">Marks</th>
                     </tr>
-                {% endfor %}
-            </table>
+                    {% for answer in checker %}
+                        <tr>
 
+                            {% if answer %}
+                                <td style="background-color:#00ff00; width:5%;padding:5px ;border:25px solid white "></td>
+                            {% else %}
+                                <td style="background-color:#ff0000; width:5%; padding:5px;border:25px solid white"></td>
+                            {% endif %}
+                            <td style="padding:20px; width:60%">Input{{ forloop.counter }}</td>
+                            <td>
+                                {% if answer %}
+                                    2
+
+                                {% else %}
+                                    0
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+
+            <script>
+                //To go to test cases
+                window.location.hash = '#code_checker';
+
+            </script>
+        {% endif %}
+        {% if error_msg %}
+            <div id="message_display">{{ error_msg }}
+            </div>
+            <script>
+                //To go to test cases
+                window.location.hash = '#message_display';
+
+            </script>
+        {% endif %}
+    </div>
+    <div id="instruction" style="display: none;" class="container text-center">
+
+        <div class="row">
+
+            <div class="login-form col-md-6 col-md-offset-3">
+
+                <ol>
+                    <p>
+                    <li> Second round consists of 4 problem statements which has 2 hours as the time limit.</li>
+                    <br>
+
+                    <li>This Round consists of 2 easy level questions, 2 medium level questions</li>
+                    <br>
+
+                    <li>Each easy level question is for 50 marks,Medium level question is for 100 marks
+                    </li>
+
+                    <br>
+                    <li>You are not suppose to press back and refresh buttons else you will be disqualified.</li>
+                    <br>
+
+
+                    </p>
+                </ol>
+
+            </div>
         </div>
 
-        <script>
-            //To go to test cases
-            window.location.hash = '#code_checker';
-
-        </script>
-    {% endif %}
-    {% if error_msg %}
-        <div id="message_display">{{ error_msg }}
-        </div>
-        <script>
-            //To go to test cases
-            window.location.hash = '#message_display';
-
-        </script>
-    {% endif %}
+    </div>
 </div>
+
 </body>
 
 
@@ -404,6 +482,22 @@
 
     function off() {
         document.getElementById("overlay").style.display = "none";
+    }
+</script>
+<script>
+    function showInstructions() {
+        document.getElementById('question_view').style.display = "none";
+        document.getElementById('question_tab').classList.remove('active');
+        document.getElementById('instruction').style.display = "block";
+        document.getElementById('instruction_tab').className += "active";
+
+    }
+    function showCurrentQuestion() {
+        document.getElementById('instruction').style.display = "none";
+        document.getElementById('instruction_tab').classList.remove('active');
+        document.getElementById('question_view').style.display = "block";
+        document.getElementById('question_tab').className += "active";
+
     }
 </script>
 

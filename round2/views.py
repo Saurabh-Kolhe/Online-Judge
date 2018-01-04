@@ -95,7 +95,8 @@ def question_details(request, user_id, question_id):
                   {'pegs_id': int("3"), 'bought': bought, 'selected_question': selected_question,
                    'question_id': selected_question.pk,
                    'user_id': user_id, 'submitted_code': previous_code,
-                   'remaining_time': current_user.end_time - time.time()})
+                   'remaining_time': current_user.end_time - time.time(),
+                   'money': current_user.money})
 
 
 def handle_answer(request, user_id, question_id):
@@ -186,7 +187,8 @@ def handle_answer(request, user_id, question_id):
                            'three': 100, 'four': 100, 'submitted_code': code, 'selected_question': current_question,
                            'user_id': user_id, 'checker': checker,
                            'remaining_time': current_user.end_time - time.time(),
-                           'bought': True, 'question_id': question_id, 'question_score': score_object.score})
+                           'bought': True, 'question_id': question_id, 'question_score': score_object.score,
+                           'money': current_user.money})
         else:
             print(subprocess.CalledProcessError)
             # print(compile_ouput)
