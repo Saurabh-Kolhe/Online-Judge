@@ -27,7 +27,7 @@ class Question(models.Model):
     input = models.CharField(default=0, max_length=5000)
     correct_op = models.CharField(default=0, max_length=10000)
     explanation = models.CharField(max_length=7000)
-    test_input = models.CharField(max_length=700)
+    test_input = models.CharField(max_length=100000)
     test_output = models.CharField(max_length=10000)
     cost = models.IntegerField()
     user = models.ManyToManyField(User, null=True, through="Score")

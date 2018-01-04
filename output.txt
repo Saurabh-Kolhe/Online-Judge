@@ -1,9 +1,5 @@
-1_11.cpp: In function ‘int main()’:
-1_11.cpp:6:1: error: ‘cout’ was not declared in this scope
- cout<<"Hello";
- ^
-1_11.cpp:6:1: note: suggested alternative:
-In file included from 1_11.cpp:1:0:
-/usr/include/c++/5/iostream:61:18: note:   ‘std::cout’
-   extern ostream cout;  /// Linked to standard output
-                  ^
+In file included from /usr/include/c++/5/unordered_map:35:0,
+                 from 9_11.cpp:17:
+/usr/include/c++/5/bits/c++0x_warning.h:32:2: error: #error This file requires compiler and library support for the ISO C++ 2011 standard. This support must be enabled with the -std=c++11 or -std=gnu++11 compiler options.
+ #error This file requires compiler and library support \
+  ^

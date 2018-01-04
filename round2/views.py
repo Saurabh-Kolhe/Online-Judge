@@ -137,7 +137,7 @@ def handle_answer(request, user_id, question_id):
         f.close()
 
         print("printing my code")
-        print(code)
+        # print(code)
         current_question = Question.objects.get(pk=question_id)
         jsonDec = json.decoder.JSONDecoder()
         correct_op = list(jsonDec.decode(current_question.correct_op))
@@ -180,18 +180,17 @@ def handle_answer(request, user_id, question_id):
                     time_finish = True
                     global ps_id
                     ps_id = p.pid
-                    print(ps_id)
-                    signal.alarm(2)
+                    # print(ps_id)
+                    # signal.alarm(5)
                     global tle
                     tle = False
                     result[counter] = str(p.stdout.readline().rstrip())
                     time_finish = False
-
-                    if tle==True:
-
+                    print("answr : ", correct_op[counter], result[counter])
                     a = result[counter] + "b''"
                     temp = ""
                     result[counter] = result[counter][2:len(result[counter]) - 1]
+
                     # print(a)
                     # print(result[counter])
                     while not temp == "b''" and str(result[counter]).__len__() <= str(correct_op[counter]).__len__():
@@ -209,7 +208,7 @@ def handle_answer(request, user_id, question_id):
                         checker[counter] = False
                     counter += 1
                     os.killpg(os.getpgid(p.pid), signal.SIGTERM)
-                print(code)
+            # print(code)
             except:
                 print('Error')
             score_object = Score.objects.get(user_f=current_user, question_f=current_question)
