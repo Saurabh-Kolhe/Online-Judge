@@ -14,6 +14,7 @@ import threading
 
 time_finish = True
 ps_id = 0
+tle = False
 
 
 def timeout(sig, frm):
@@ -22,6 +23,7 @@ def timeout(sig, frm):
     if time_finish == True:
         print("Finished")
         os.killpg(os.getpgid(ps_id), signal.SIGTERM)
+        tle = True
         return HttpResponse("TLE")
         # raise Exception
 
@@ -180,8 +182,13 @@ def handle_answer(request, user_id, question_id):
                     ps_id = p.pid
                     print(ps_id)
                     signal.alarm(2)
+                    global tle
+                    tle = False
                     result[counter] = str(p.stdout.readline().rstrip())
                     time_finish = False
+
+                    if tle==True:
+
                     a = result[counter] + "b''"
                     temp = ""
                     result[counter] = result[counter][2:len(result[counter]) - 1]
