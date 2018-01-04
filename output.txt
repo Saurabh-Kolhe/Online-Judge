@@ -1,3 +1,9 @@
-2_14.cpp:1:1: error: ‘ukuk’ does not name a type
- ukuk
+1_11.cpp: In function ‘int main()’:
+1_11.cpp:6:1: error: ‘cout’ was not declared in this scope
+ cout<<"Hello";
  ^
+1_11.cpp:6:1: note: suggested alternative:
+In file included from 1_11.cpp:1:0:
+/usr/include/c++/5/iostream:61:18: note:   ‘std::cout’
+   extern ostream cout;  /// Linked to standard output
+                  ^
