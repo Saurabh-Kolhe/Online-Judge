@@ -1,3 +1,6 @@
+import os
+import signal
+
 from django.shortcuts import render, HttpResponse
 from .models import User, Question, Score
 import subprocess
@@ -7,12 +10,30 @@ from subprocess import Popen, PIPE
 import time
 import threading
 
+# import signal, sys
+
+time_finish = True
+ps_id = 0
+
+
+def timeout(sig, frm):
+    print('timeout')
+    # time_finish = True
+    if time_finish == True:
+        print("Finished")
+        os.killpg(os.getpgid(ps_id), signal.SIGTERM)
+        return HttpResponse("TLE")
+        # raise Exception
+
+
+signal.signal(signal.SIGALRM, timeout)
+
 
 def question(request, user_id):
     all_questions = Question.objects.all()
     current_user = User.objects.get(pk=user_id)
     jsonDec = json.decoder.JSONDecoder()
-    # all_marks = list(jsonDec.decode(current_user.score))
+    # all_marks = list(jsonDec.decode(current_user. score))
     current_user.total_score = 0
     temp = 0
     # for marks in all_marks:
@@ -126,7 +147,8 @@ def handle_answer(request, user_id, question_id):
         t = 0
         # from subprocess import CalledProcessError, check_output
         compile_ouput = subprocess.getoutput(
-            'g++ ' + str(question_id) + '_' + str(user_id) + '.cpp -o ' + str(question_id) + '_' + str(user_id))
+            'g++ ' + str(question_id) + '_' + str(user_id) + '.cpp -o ' + str(question_id) + '_' + str(
+                user_id) + '.out')
         marks = 0
         current_user = User.objects.get(pk=user_id)
         # Successfully complied
@@ -141,37 +163,48 @@ def handle_answer(request, user_id, question_id):
             counter = 0
             result = [None] * len(input)
             checker = [None] * len(input)
-            for ii in input:
+            try:
+                for ii in input:
 
-                p = Popen(['./' + str(question_id) + '_' + str(user_id) + '.out'], shell=True, stdout=PIPE, stdin=PIPE)
-                value = str(ii) + '\n'
-                value = bytes(value, 'UTF-8')  # Needed in Python 3.
+                    p = Popen(['./' + str(question_id) + '_' + str(user_id) + '.out'], shell=True, stdout=PIPE,
+                              stdin=PIPE,
+                              preexec_fn=os.setsid)
+                    value = str(ii) + '\n'
+                    value = bytes(value, 'UTF-8')  # Needed in Python 3.
 
-                p.stdin.write(value)
-                p.stdin.flush()
+                    p.stdin.write(value)
+                    p.stdin.flush()
+                    global time_finish
+                    time_finish = True
+                    global ps_id
+                    ps_id = p.pid
+                    print(ps_id)
+                    signal.alarm(2)
+                    result[counter] = str(p.stdout.readline().rstrip())
+                    time_finish = False
+                    a = result[counter] + "b''"
+                    temp = ""
+                    result[counter] = result[counter][2:len(result[counter]) - 1]
+                    # print(a)
+                    # print(result[counter])
+                    while not temp == "b''" and str(result[counter]).__len__() <= str(correct_op[counter]).__len__():
+                        # result += "<br>"
+                        temp = str(p.stdout.readline().rstrip())
+                        if not temp == "b''":
+                            temp = temp[2:len(temp) - 1]
+                            result[counter] += temp
+                        # print(result)
 
-                result[counter] = str(p.stdout.readline().rstrip())
-                a = result[counter] + "b''"
-                temp = ""
-                result[counter] = result[counter][2:len(result[counter]) - 1]
-                print(a)
-                print(result[counter])
-                while not temp == "b''":
-                    # result += "<br>"
-                    temp = str(p.stdout.readline().rstrip())
-                    if not temp == "b''":
-                        temp = temp[2:len(temp) - 1]
-                        result[counter] += temp
-                    print(result)
-
-                if str(correct_op[counter]) == result[counter]:
-                    checker[counter] = True
-                    marks += 2
-                else:
-                    checker[counter] = False
-                counter += 1
-            print(code)
-
+                    if str(correct_op[counter]) == result[counter]:
+                        checker[counter] = True
+                        marks += 2
+                    else:
+                        checker[counter] = False
+                    counter += 1
+                    os.killpg(os.getpgid(p.pid), signal.SIGTERM)
+                print(code)
+            except:
+                print('Error')
             score_object = Score.objects.get(user_f=current_user, question_f=current_question)
             if score_object.score < marks:
                 current_user.money += (marks - score_object.score)
@@ -286,5 +319,5 @@ def buy_question(request, user_id, question_id):
     #                'submitted_code': previous_code, 'remaining_time': current_user.end_time - time.time()})
 
 
-def run_code(p,input):
+def run_code(p, input):
     print('starting thread')
