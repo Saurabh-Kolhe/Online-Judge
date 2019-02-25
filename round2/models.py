@@ -13,7 +13,7 @@ class User(models.Model):
     email2 = models.CharField(max_length=100)
     total_score = models.IntegerField(default=0)
     end_time = models.IntegerField(default=0)
-    # score = models.TextField()
+    #score = models.TextField()
     money = models.IntegerField(default=100)
     easy_counter = models.IntegerField(default=0)
 
@@ -28,6 +28,7 @@ class Question(models.Model):
     correct_op = models.CharField(default=0, max_length=10000)
     explanation = models.CharField(max_length=7000)
     test_input = models.CharField(max_length=100000)
+
     test_output = models.CharField(max_length=10000)
     cost = models.IntegerField()
     user = models.ManyToManyField(User, null=True, through="Score")

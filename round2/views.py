@@ -10,7 +10,7 @@ from subprocess import Popen, PIPE
 import time
 import threading
 
-# import signal, sys
+import signal, sys
 
 time_finish = True
 ps_id = 0
@@ -27,8 +27,7 @@ def timeout(sig, frm):
         return HttpResponse("TLE")
         # raise Exception
 
-
-signal.signal(signal.SIGALRM, timeout)
+    signal.signal(signal.SIGALRM, timeout)
 
 
 def question(request, user_id):
@@ -96,10 +95,10 @@ def create_user(request):
 
 def question_details(request, user_id, question_id):
     selected_question = Question.objects.get(pk=question_id)
-    print(selected_question)
+    # print(selected_question)
     current_user = User.objects.get(pk=user_id)
-    print(current_user.end_time)
-    print(current_user.end_time - time.time())
+    # print(current_user.end_time)
+    # print(current_user.end_time - time.time())
     bought = False
     if current_user in selected_question.user.all():
         bought = True
@@ -137,7 +136,7 @@ def handle_answer(request, user_id, question_id):
 
         f.close()
 
-        print("printing my code")
+        # print("printing my code")
         # print(code)
         current_question = Question.objects.get(pk=question_id)
         jsonDec = json.decoder.JSONDecoder()
@@ -147,6 +146,7 @@ def handle_answer(request, user_id, question_id):
             return render(request, 'round2/question_details.html',
                       {'submitted': True, 'submitted_code': str(code), 'selected_question': current_question,
                        'user_id': user_id})'''
+
         t = 0
         # from subprocess import CalledProcessError, check_output
         compile_ouput = subprocess.getoutput(
