@@ -140,8 +140,8 @@ def handle_answer(request, user_id, question_id):
         # print(code)
         current_question = Question.objects.get(pk=question_id)
         jsonDec = json.decoder.JSONDecoder()
-        correct_op = list(jsonDec.decode(current_question.correct_op))
-        input = list(jsonDec.decode(current_question.input))
+        correct_op = [jsonDec.decode(current_question.correct_op)]
+        input = [jsonDec.decode(current_question.input)]
         '''pyperclip.copy('The text to be copied to the clipboard.')
             return render(request, 'round2/question_details.html',
                       {'submitted': True, 'submitted_code': str(code), 'selected_question': current_question,
