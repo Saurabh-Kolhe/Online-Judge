@@ -258,13 +258,24 @@
                          style="margin-bottom: 0px; font-weight: bold; font-size:150%;">
                         Code
                         Editor
+
+                         <select name= "language" id = "language" style="float: right">
+                              <option value="c">C</option>
+                              <option value="cpp">C++</option>
+                            </select>
+                        <br>
                     </div>
                     <!--<div id="text_area" name="text_area" style="margin-top: 0px;" ></div>
                     .innerHTML-->
 
                     <textarea id="text_area" name="text_area" rows="30"
                               style="font-size:135%;">{{ submitted_code }}</textarea>
-
+{##}
+{#                    <div> This is th output#}
+{#                        {{ output_to_display }}#}
+{#                    </div>#}
+                    <br>
+                    <input class="btn" type="submit" name="run" value="run" id="run-code">
                     <input class="btn btn-success" type="submit" name="submit" value="submit" id="submit_code">
 
 
@@ -327,7 +338,7 @@
             </script>
         {% endif %}
         {% if error_msg %}
-            <div id="message_display">{{ error_msg }}
+            <div id="message_display" style="padding: 50px 0px; text-align: center" ><h3>Error Message</h3> <br>{{ error_msg }}
             </div>
             <script>
                 //To go to test cases

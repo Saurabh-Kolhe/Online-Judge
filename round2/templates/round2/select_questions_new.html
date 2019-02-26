@@ -147,6 +147,14 @@
 
 </div>
 
+<script>
+        history.pushState(null, null, document.title);
+        window.addEventListener('popstate', function () {
+            history.pushState(null, null, document.title);
+            alert('The only way is Ahead..!!!');
+        });
+    </script>
+
 </body>
 
 <script type="text/javascript">

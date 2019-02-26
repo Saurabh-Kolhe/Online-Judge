@@ -2,8 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="039fb828-f419-47f8-9e0a-9d63fbc072f8" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1_1.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/1_13.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/1_17.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/1_2.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/1_4.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/2_13.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/2_14.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/2_4.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/3_4.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/4_13.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/4_4.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/8_21.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/9_19.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/a.out" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/round2/templates/round2/question_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/round2/templates/round2/question_details.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/round2/templates/round2/select_questions_new.html" beforeDir="false" afterPath="$PROJECT_DIR$/round2/templates/round2/select_questions_new.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/round2/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/round2/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -51,8 +69,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/round2/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="147" column="46" lean-forward="true" selection-start-line="147" selection-start-column="46" selection-end-line="147" selection-end-column="46" />
+            <state relative-caret-position="321">
+              <caret line="179" selection-start-line="179" selection-end-line="179" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -61,10 +79,26 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/round2/templates/round2/leaderboard_new.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="70" column="33" selection-start-line="70" selection-start-column="33" selection-end-line="70" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/round2/templates/round2/question_details.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4572">
-              <caret line="254" column="53" selection-start-line="254" selection-start-column="53" selection-end-line="254" selection-end-column="53" />
+            <state relative-caret-position="638">
+              <caret line="348" column="10" lean-forward="true" selection-start-line="348" selection-start-column="10" selection-end-line="348" selection-end-column="10" />
+              <folding>
+                <element signature="n#style#0;n#select#0;n#div#0;n#form#0;n#div#2;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#textarea#0;n#form#0;n#div#2;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#div#3;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#1;n#tr#1;n#table#0;n#div#3;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#4;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -72,8 +106,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/round2/templates/round2/select_questions_new.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1890">
-              <caret line="105" column="64" selection-start-line="105" selection-start-column="64" selection-end-line="105" selection-end-column="64" />
+            <state relative-caret-position="519">
+              <caret line="154" column="8" selection-start-line="154" selection-start-column="8" selection-end-line="154" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -82,7 +116,7 @@
         <entry file="file://$PROJECT_DIR$/round2/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="270">
-              <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+              <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -90,8 +124,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/round2/templates/round2/instructions_new.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1440">
-              <caret line="80" column="32" selection-start-line="80" selection-start-column="32" selection-end-line="80" selection-end-column="32" />
+            <state relative-caret-position="285">
+              <caret line="124" selection-start-line="124" selection-end-line="128" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -99,7 +133,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/round2/templates/round2/register_new.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1152">
+            <state relative-caret-position="519">
               <caret line="64" column="47" selection-start-line="64" selection-start-column="47" selection-end-line="64" selection-end-column="47" />
             </state>
           </provider>
@@ -108,8 +142,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/round2/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="16" column="80" selection-start-line="16" selection-start-column="80" selection-end-line="16" selection-end-column="80" />
+            <state relative-caret-position="288">
+              <caret line="16" column="76" selection-start-line="16" selection-start-column="76" selection-end-line="16" selection-end-column="76" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -129,21 +163,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>score</find>
-      <find>timer</find>
-      <find>codeg</find>
-      <find>prompt_user</find>
-      <find>c</find>
-      <find>codeGetter</find>
-      <find>buy_ques</find>
-      <find>set</find>
-      <find>all()</find>
-      <find>add(</find>
-      <find>fini</find>
-      <find>lead</find>
-      <find>round2:leaderboard</find>
-      <find>button</find>
-      <find>buy</find>
       <find>csrf</find>
       <find>success</find>
       <find>pipe</find>
@@ -159,6 +178,21 @@
       <find>print(code</find>
       <find>ans</find>
       <find>bough</find>
+      <find>fini</find>
+      <find>handle_a</find>
+      <find>handl</find>
+      <find>code</find>
+      <find>wall</find>
+      <find>messa</find>
+      <find>compile_ouput</find>
+      <find>input</find>
+      <find>checker</find>
+      <find>correct_op</find>
+      <find>this is</find>
+      <find>check</find>
+      <find>err</find>
+      <find>run</find>
+      <find>message_dis</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -179,15 +213,15 @@
         <option value="$PROJECT_DIR$/round2/templates/round2/register_new.html" />
         <option value="$PROJECT_DIR$/round2/templates/round2/instruction.html" />
         <option value="$PROJECT_DIR$/round2/templates/round2/select_questions.html" />
-        <option value="$PROJECT_DIR$/round2/templates/round2/select_questions_new.html" />
-        <option value="$PROJECT_DIR$/round2/templates/round2/leaderboard_new.html" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/round2/templates/round2/question_details.html" />
         <option value="$PROJECT_DIR$/cstorm2/settings.py" />
         <option value="$PROJECT_DIR$/round2/templates/round2/leaderboard.html" />
         <option value="$PROJECT_DIR$/cstorm2/urls.py" />
         <option value="$PROJECT_DIR$/round2/templates/round2/instructions_new.html" />
         <option value="$PROJECT_DIR$/round2/models.py" />
+        <option value="$PROJECT_DIR$/round2/templates/round2/leaderboard_new.html" />
+        <option value="$PROJECT_DIR$/round2/templates/round2/select_questions_new.html" />
+        <option value="$PROJECT_DIR$/round2/templates/round2/question_details.html" />
         <option value="$PROJECT_DIR$/round2/views.py" />
       </list>
     </option>
@@ -220,6 +254,19 @@
             <path>
               <item name="EarnCode" type="b2602c69:ProjectViewProjectNode" />
               <item name="EarnCode" type="462c0819:PsiDirectoryNode" />
+              <item name="round2" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="EarnCode" type="b2602c69:ProjectViewProjectNode" />
+              <item name="EarnCode" type="462c0819:PsiDirectoryNode" />
+              <item name="round2" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="EarnCode" type="b2602c69:ProjectViewProjectNode" />
+              <item name="EarnCode" type="462c0819:PsiDirectoryNode" />
+              <item name="round2" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="round2" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -322,7 +369,8 @@
       <workItem from="1551011236431" duration="558000" />
       <workItem from="1551031869291" duration="2013000" />
       <workItem from="1551064145476" duration="8139000" />
-      <workItem from="1551100369629" duration="712000" />
+      <workItem from="1551100369629" duration="2932000" />
+      <workItem from="1551157360765" duration="18497000" />
     </task>
     <task id="LOCAL-00001" summary="Just a commit">
       <created>1513418760326</created>
@@ -380,17 +428,24 @@
       <option name="project" value="LOCAL" />
       <updated>1515042508254</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="&#10;Initial commit">
+      <created>1551101264883</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1551101264884</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11422000" />
+    <option name="totallyTimeSpent" value="32139000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="32" width="1853" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20858896" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2119353" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -403,7 +458,7 @@
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5141509" side_tool="true" weight="0.3404908" />
       <window_info anchor="bottom" id="Python Console" order="8" weight="0.3280899" />
       <window_info active="true" anchor="bottom" id="Terminal" order="9" sideWeight="0.49722442" visible="true" weight="0.28988764" />
-      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.48584905" weight="0.3404908" />
+      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.48584905" weight="0.34044945" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="12" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -627,13 +682,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/round2/templates/round2/leaderboard_new.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="78" column="6" lean-forward="true" selection-start-line="78" selection-start-column="6" selection-end-line="78" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/manage.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
@@ -664,57 +712,78 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/round2/views.py">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/platform-impl.jar!/resources/html5-schema/html5/web-forms.rnc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="147" column="46" lean-forward="true" selection-start-line="147" selection-start-column="46" selection-end-line="147" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/round2/templates/round2/question_details.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4572">
-          <caret line="254" column="53" selection-start-line="254" selection-start-column="53" selection-end-line="254" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/round2/templates/round2/select_questions_new.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1890">
-          <caret line="105" column="64" selection-start-line="105" selection-start-column="64" selection-end-line="105" selection-end-column="64" />
+        <state relative-caret-position="197">
+          <caret line="150" column="22" selection-start-line="150" selection-start-column="22" selection-end-line="150" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/round2/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
-          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/round2/templates/round2/instructions_new.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1440">
-          <caret line="80" column="32" selection-start-line="80" selection-start-column="32" selection-end-line="80" selection-end-column="32" />
+          <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/round2/templates/round2/register_new.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1152">
+        <state relative-caret-position="519">
           <caret line="64" column="47" selection-start-line="64" selection-start-column="47" selection-end-line="64" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/round2/templates/round2/leaderboard_new.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="70" column="33" selection-start-line="70" selection-start-column="33" selection-end-line="70" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/round2/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="16" column="80" selection-start-line="16" selection-start-column="80" selection-end-line="16" selection-end-column="80" />
+        <state relative-caret-position="288">
+          <caret line="16" column="76" selection-start-line="16" selection-start-column="76" selection-end-line="16" selection-end-column="76" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/round2/templates/round2/instructions_new.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="124" selection-start-line="124" selection-end-line="128" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/round2/templates/round2/select_questions_new.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="154" column="8" selection-start-line="154" selection-start-column="8" selection-end-line="154" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/round2/templates/round2/question_details.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="638">
+          <caret line="348" column="10" lean-forward="true" selection-start-line="348" selection-start-column="10" selection-end-line="348" selection-end-column="10" />
+          <folding>
+            <element signature="n#style#0;n#select#0;n#div#0;n#form#0;n#div#2;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#form#0;n#div#2;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#div#3;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#1;n#tr#1;n#table#0;n#div#3;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#4;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/round2/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="179" selection-start-line="179" selection-end-line="179" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>

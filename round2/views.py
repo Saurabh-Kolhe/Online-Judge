@@ -5,7 +5,7 @@ from django.shortcuts import render, HttpResponse
 from .models import User, Question, Score
 import subprocess
 import json
-import pyperclip
+# import pyperclip
 from subprocess import Popen, PIPE
 import time
 import threading
@@ -104,7 +104,7 @@ def question_details(request, user_id, question_id):
         bought = True
 
     jsonDec = json.decoder.JSONDecoder()
-    current_user.total_score = 0
+    # current_user.total_score = 0
     # all_marks = list(jsonDec.decode(current_user.score))
     # for marks in all_marks:
     #     current_user.total_score += marks
@@ -125,125 +125,217 @@ def handle_answer(request, user_id, question_id):
     if request.POST.get("finish"):
         return leaderboard(request, user_id)
     # code = request.POST.get("text_area")
-    if request.POST.get("submit"):
-        code = request.POST.get("text_area")
+    language = "cpp"#request.POST.get("language")
+    print(language)
+    input_file = str(question_id) + '_' + str(user_id)
 
-        # print(code)
-        f = open(str(question_id) + '_' + str(user_id) + '.cpp', 'w')
+    code = request.POST.get("text_area")
+    f = open(input_file + '.' + language, 'w')
+    # f=open('test.cpp','w')
+    f.write(code)
+    f.close()
 
-        # f=open('test.cpp','w')
-        f.write(code)
+    current_user = User.objects.get(pk=user_id)
+    current_question = Question.objects.get(pk=question_id)
+    jsonDec = json.decoder.JSONDecoder()
+    score_object = Score.objects.get(user_f=current_user, question_f=current_question)
 
-        f.close()
+    correct_op = jsonDec.decode(current_question.correct_op)
 
-        # print("printing my code")
-        # print(code)
-        current_question = Question.objects.get(pk=question_id)
-        jsonDec = json.decoder.JSONDecoder()
-        correct_op = [jsonDec.decode(current_question.correct_op)]
-        input = [jsonDec.decode(current_question.input)]
-        '''pyperclip.copy('The text to be copied to the clipboard.')
-            return render(request, 'round2/question_details.html',
-                      {'submitted': True, 'submitted_code': str(code), 'selected_question': current_question,
-                       'user_id': user_id})'''
+    checker = [None] * len(correct_op)
+    input = jsonDec.decode(current_question.input)
+    input_str = ""
+    for i in input:
+        input_str += (str(i) + ' ')
+    print('this is input'+input_str)
 
-        t = 0
-        # from subprocess import CalledProcessError, check_output
-        compile_ouput = subprocess.getoutput(
-            'g++ ' + str(question_id) + '_' + str(user_id) + '.cpp -o ' + str(question_id) + '_' + str(
-                user_id) + '.out')
-        marks = 0
-        current_user = User.objects.get(pk=user_id)
-        # Successfully complied
-        if not compile_ouput:
-            print('compiled')
-            '''f = open('output.txt', 'w')
-                        output = subprocess.check_output('a.exe', universal_newlines=True, shell=True)
-                        f.write(output)
-                        f.close()'''
 
-            input_length = len(input)
-            counter = 0
-            result = [None] * len(input)
-            checker = [None] * len(input)
-            try:
-                for ii in input:
+    f = open(input_file + '.txt','w')
+    f.write(input_str)
+    f.close()
 
-                    p = Popen(['./' + str(question_id) + '_' + str(user_id) + '.out'], shell=True, stdout=PIPE,
-                              stdin=PIPE,
-                              preexec_fn=os.setsid)
-                    value = str(ii) + '\n'
-                    value = bytes(value, 'UTF-8')  # Needed in Python 3.
+    compiler = 'g++ '
+    if language is 'cpp':
+        compiler = 'g++ '
 
-                    p.stdin.write(value)
-                    p.stdin.flush()
-                    global time_finish
-                    time_finish = True
-                    global ps_id
-                    ps_id = p.pid
-                    # print(ps_id)
-                    # signal.alarm(5)
-                    global tle
-                    tle = False
-                    result[counter] = str(p.stdout.readline().rstrip())
-                    time_finish = False
-                    print("answr : ", correct_op[counter], result[counter])
-                    a = result[counter] + "b''"
-                    temp = ""
-                    result[counter] = result[counter][2:len(result[counter]) - 1]
+    compile_output = subprocess.getoutput(
+        compiler +' -o ' + input_file + ' ' + input_file + '.' + language)
 
-                    # print(a)
-                    # print(result[counter])
-                    while not temp == "b''" and str(result[counter]).__len__() <= str(correct_op[counter]).__len__():
-                        # result += "<br>"
-                        temp = str(p.stdout.readline().rstrip())
-                        if not temp == "b''":
-                            temp = temp[2:len(temp) - 1]
-                            result[counter] += temp
-                        # print(result)
+    if not compile_output:
+        compile_output = subprocess.getoutput(
+            './' + input_file + ' <' + input_file + '.txt')
+        output_to_display = False
 
-                    if str(correct_op[counter]) == result[counter]:
-                        checker[counter] = True
-                        marks += 2
-                    else:
-                        checker[counter] = False
-                    counter += 1
-                    os.killpg(os.getpgid(p.pid), signal.SIGTERM)
-            # print(code)
-            except:
-                print('Error')
-            score_object = Score.objects.get(user_f=current_user, question_f=current_question)
-            if score_object.score < marks:
-                current_user.money += (marks - score_object.score)
-                score_object.score = marks
-                score_object.save()
+        generated_output = compile_output.split()
 
-            # all_marks = list(jsonDec.decode(current_user.score))
-            current_user.total_score = sum(Score.objects.filter(user_f=current_user).values_list('score', flat=True))
-            current_user.save()
-            return render(request, 'round2/question_details.html',
-                          {'pegs_id': int("3"), 'error_msg': False, 'submitted': True, 'one': 50, 'two': 50,
-                           'three': 100, 'four': 100, 'submitted_code': code, 'selected_question': current_question,
-                           'user_id': user_id, 'checker': checker,
-                           'remaining_time': current_user.end_time - time.time(),
-                           'bought': True, 'question_id': question_id, 'question_score': score_object.score,
-                           'money': current_user.money})
+        # print(type(generated_output),type(correct_op))
+
+        if len(generated_output) < len(correct_op):
+            output_to_display = compile_output
+            iterable_length = len(generated_output)
+        elif len(generated_output) > len(correct_op):
+            output_to_display = compile_output
+            iterable_length = len(correct_op)
         else:
-            print(subprocess.CalledProcessError)
-            # print(compile_ouput)
+            iterable_length = len(correct_op)
 
-            f = open('output.txt', 'w')
-            f.write(compile_ouput)
-            f.close()
+        for i in range(iterable_length):
+            if generated_output[i] == str(correct_op[i]):
+                checker[i] = True
 
-            return render(request, 'round2/question_details.html',
-                          {'pegs_id': int("3"), 'submitted': False, 'submitted_code': code,
-                           'selected_question': current_question,
-                           'user_id': user_id, 'checker': False,
-                           'remaining_time': current_user.end_time - time.time(), 'error_msg': str(compile_ouput)
-                              , "question_id": question_id, 'bought': True})
 
-        # return HttpResponse("<h2>"+ str(result) +"</h2>")
+        return render(request, 'round2/question_details.html',
+                  {'pegs_id': int("3"), 'error_msg': False, 'submitted': True, 'one': 50, 'two': 50,
+                   'three': 100, 'four': 100, 'submitted_code': code, 'selected_question': current_question,
+                   'user_id': user_id, 'checker': checker,
+                   'remaining_time': current_user.end_time - time.time(), 'error_msg': output_to_display,
+                   'bought': True, 'question_id': question_id, 'question_score': score_object.score,
+                   'money': current_user.money})
+
+
+    else:
+        print('something else')
+        output_to_display = compile_output
+        return render(request, 'round2/question_details.html',
+                      {'pegs_id': int("3"), 'submitted': False, 'submitted_code': code,
+                       'selected_question': current_question,
+                       'user_id': user_id, 'checker': False,
+                       'remaining_time': current_user.end_time - time.time(), 'error_msg': str(compile_output)
+                          , "question_id": question_id, 'bought': True})
+
+    # output after running the code with test cases
+
+
+
+
+    output_to_display = ""
+
+    # compile_output = subprocess.getoutput(
+    #     compiler str(question_id)+'_'+str(user_id)+'.'+str(language) && ./a.out < input.txt)
+    # print('>>'+compile_output+'<<')
+    # output_to_display = compile_output
+
+    # print(correct_op)
+
+    #sucessfully compiled
+    # if not compile_output:
+    #     print(correct_op + 'complie_op'  + compile_output)
+    #     return render(request, 'round2/question_details.html',
+    #                           {'pegs_id': int("3"), 'error_msg': False, 'submitted': True, 'one': 50, 'two': 50,
+    #                            'three': 100, 'four': 100, 'submitted_code': code, 'selected_question': current_question,
+    #                            'user_id': user_id, 'checker': False,
+    #                            'remaining_time': current_user.end_time - time.time(),
+    #                            'bought': True, 'question_id': question_id, 'question_score': score_object.score,
+    #                            'money': current_user.money})
+
+
+
+    # if request.POST.get("submit"):
+    #     '''pyperclip.copy('The text to be copied to the clipboard.')
+    #         return render(request, 'round2/question_details.html',
+    #                   {'submitted': True, 'submitted_code': str(code), 'selected_question': current_question,
+    #                    'user_id': user_id})'''
+    #
+    #     t = 0
+    #     # from subprocess import CalledProcessError, check_output
+    #     # compile_ouput = subprocess.getoutput(
+    #     #     'g++ ' + str(question_id) + '_' + str(user_id) + '.cpp -o ' + str(question_id) + '_' + str(
+    #     #         user_id) + '.out')
+    #     marks = 0
+    #     current_user = User.objects.get(pk=user_id)
+    #     # Successfully complied
+    #     if not compile_output:
+    #         print('compiled')
+    #         '''f = open('output.txt', 'w')
+    #                     output = subprocess.check_output('a.exe', universal_newlines=True, shell=True)
+    #                     f.write(output)
+    #                     f.close()'''
+    #
+    #         input_length = len(input)
+    #         counter = 0
+    #         result = [None] * len(input)
+    #         checker = [None] * len(input)
+    #         try:
+    #             for ii in input:
+    #
+    #                 p = Popen(['./' + str(question_id) + '_' + str(user_id) + '.out'], shell=True, stdout=PIPE,
+    #                           stdin=PIPE,
+    #                           preexec_fn=os.setsid)
+    #                 value = str(ii) + '\n'
+    #                 value = bytes(value, 'UTF-8')  # Needed in Python 3.
+    #
+    #                 p.stdin.write(value)
+    #                 p.stdin.flush()
+    #                 global time_finish
+    #                 time_finish = True
+    #                 global ps_id
+    #                 ps_id = p.pid
+    #                 # print(ps_id)
+    #                 # signal.alarm(5)
+    #                 global tle
+    #                 tle = False
+    #                 result[counter] = str(p.stdout.readline().rstrip())
+    #                 time_finish = False
+    #                 print("answr : ", correct_op[counter], result[counter])
+    #                 a = result[counter] + "b''"
+    #                 temp = ""
+    #                 result[counter] = result[counter][2:len(result[counter]) - 1]
+    #
+    #                 # print(a)
+    #                 # print(result[counter])
+    #                 while not temp == "b''" and str(result[counter]).__len__() <= str(correct_op[counter]).__len__():
+    #                     # result += "<br>"
+    #                     temp = str(p.stdout.readline().rstrip())
+    #                     if not temp == "b''":
+    #                         temp = temp[2:len(temp) - 1]
+    #                         result[counter] += temp
+    #                     # print(result)
+    #
+    #                 if str(correct_op[counter]) == result[counter]:
+    #                     checker[counter] = True
+    #                     marks += 2
+    #                 else:
+    #                     checker[counter] = False
+    #                 counter += 1
+    #                 os.killpg(os.getpgid(p.pid), signal.SIGTERM)
+    #         # print(code)
+    #         except:
+    #             print('Error')
+    #         score_object = Score.objects.get(user_f=current_user, question_f=current_question)
+    #         if score_object.score < marks:
+    #             current_user.money += (marks - score_object.score)
+    #             score_object.score = marks
+    #             score_object.save()
+    #
+    #         # all_marks = list(jsonDec.decode(current_user.score))
+    #         current_user.total_score = sum(Score.objects.filter(user_f=current_user).values_list('score', flat=True))
+    #         current_user.save()
+    #         return render(request, 'round2/question_details.html',
+    #                       {'pegs_id': int("3"), 'error_msg': False, 'submitted': True, 'one': 50, 'two': 50,
+    #                        'three': 100, 'four': 100, 'submitted_code': code, 'selected_question': current_question,
+    #                        'user_id': user_id, 'checker': checker,
+    #                        'remaining_time': current_user.end_time - time.time(),
+    #                        'bought': True, 'question_id': question_id, 'question_score': score_object.score,
+    #                        'money': current_user.money})
+    #     else:
+    #         print(subprocess.CalledProcessError)
+    #         # print(compile_output)
+    #
+    #         f = open('output.txt', 'w')
+    #         f.write(compile_output)
+    #         f.close()
+    #
+    #         return render(request, 'round2/question_details.html',
+    #                       {'pegs_id': int("3"), 'submitted': False, 'submitted_code': code,
+    #                        'selected_question': current_question,
+    #                        'user_id': user_id, 'checker': False,
+    #                        'remaining_time': current_user.end_time - time.time(), 'error_msg': str(compile_output)
+    #                           , "question_id": question_id, 'bought': True, 'output_to_display':output_to_display})
+    #
+    #     return HttpResponse("<h2>"+ str(result) +"</h2>")
+    # else request.POST.get("run"):
+
+
     ''' else :.
             print(subprocess.CalledProcessError)
             print(compile_ouput)
