@@ -99,13 +99,10 @@ def question_details(request, user_id, question_id):
     current_user = User.objects.get(pk=user_id)
     try:
         score_object = Score.objects.get(user_f=current_user, question_f=selected_question)
-    except:
-        score_object = None
-
-    if score_object:
         language = score_object.language_preferred
-    else:
-        pass
+    except:
+        language = 'c'
+
 
     # print(current_user.end_time)
     # print(current_user.end_time - time.time())
@@ -197,7 +194,7 @@ def handle_answer(request, user_id, question_id):
             iterable_length = len(correct_op)
 
 
-
+        print(compile_output+"<-this ")
         score = 0
 
         for i in range(iterable_length):
@@ -211,7 +208,7 @@ def handle_answer(request, user_id, question_id):
                    'user_id': user_id, 'checker': checker,
                    'remaining_time': current_user.end_time - time.time(), 'error_msg': output_to_display,
                    'bought': True, 'question_id': question_id, 'question_score': score_object.score,
-                   'money': current_user.money, 'language': current_user.language_preferred})
+                   'money': current_user.money, 'language': score_object.language_preferred})
 
     else:
         print('something else')
@@ -221,7 +218,7 @@ def handle_answer(request, user_id, question_id):
                        'selected_question': current_question,
                        'user_id': user_id, 'checker': False,
                        'remaining_time': current_user.end_time - time.time(), 'error_msg': str(output_to_display)
-                          , "question_id": question_id, 'bought': True, 'language': current_user.language_preferred})
+                          , "question_id": question_id, 'bought': True, 'language': score_object.language_preferred})
 
     # output after running the code with test cases
 

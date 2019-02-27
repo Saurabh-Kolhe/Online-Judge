@@ -257,15 +257,15 @@
                     <div id="code_editor" name="code_editor"
                          style="margin-bottom: 0px; font-weight: bold; font-size:150%;">
                         Code
-                        Editor
+                        Editor {{ language }}
 
-                         <select name= "language" id = "language" style="float: right" value = {{ language }}>
+                         <select name= "language" id = "language" style="float: right" >
 
                              {%  if language == 'c' %}
                                   <option value="c" selected ="selected">C</option>
-                                  <option value="cpp" selected ="">C++</option>
+                                  <option value="cpp" >C++</option>
                               {% else %}
-                                  <option value="c" selected ="">C</option>
+                                  <option value="c" >C</option>
                                   <option value="cpp" selected ="selected">C++</option>
                               {%  endif %}
                          </select>
