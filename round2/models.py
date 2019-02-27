@@ -42,3 +42,5 @@ class Score(models.Model):
     user_f = models.ForeignKey(User, on_delete=models.CASCADE)
     question_f = models.ForeignKey(Question, on_delete=models.CASCADE)
     score = models.IntegerField(default=0)
+    language_preferred = models.CharField(default='c', max_length=500)
+

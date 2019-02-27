@@ -97,8 +97,13 @@ def question_details(request, user_id, question_id):
     selected_question = Question.objects.get(pk=question_id)
     # print(selected_question)
     current_user = User.objects.get(pk=user_id)
+    score_object = Score.objects.get(user_f=current_user, question_f=selected_question)
+    language = score_object.language_preferred
+
     # print(current_user.end_time)
     # print(current_user.end_time - time.time())
+
+    input_file = str(question_id) + '_' + str(user_id)
     bought = False
     if current_user in selected_question.user.all():
         bought = True
@@ -110,7 +115,7 @@ def question_details(request, user_id, question_id):
     #     current_user.total_score += marks
     current_user.save()
     try:
-        previous_code = open(str(question_id) + '_' + str(user_id) + '.cpp', 'r').read()
+        previous_code = open(input_file + '.'+language, 'r').read()
     except:
         previous_code = ""
     return render(request, 'round2/question_details.html',
@@ -118,14 +123,13 @@ def question_details(request, user_id, question_id):
                    'question_id': selected_question.pk,
                    'user_id': user_id, 'submitted_code': previous_code,
                    'remaining_time': current_user.end_time - time.time(),
-                   'money': current_user.money, 'language': 'c'})
+                   'money': current_user.money, 'language':language})
 
 
 def handle_answer(request, user_id, question_id):
     if request.POST.get("finish"):
         return leaderboard(request, user_id)
     # code = request.POST.get("text_area")
-    language = request.POST.get("language")
     print(language)
     input_file = str(question_id) + '_' + str(user_id)
 
@@ -137,9 +141,13 @@ def handle_answer(request, user_id, question_id):
 
     current_user = User.objects.get(pk=user_id)
     current_question = Question.objects.get(pk=question_id)
+    score_object = Score.objects.get(user_f=current_user, question_f=current_question)
+    language = request.POST.get("language")
     jsonDec = json.decoder.JSONDecoder()
     score_object = Score.objects.get(user_f=current_user, question_f=current_question)
 
+    score_object.language_preferred = language
+    score_object.save()
     correct_op = jsonDec.decode(current_question.correct_op)
 
     checker = [None] * len(correct_op)
@@ -180,7 +188,7 @@ def handle_answer(request, user_id, question_id):
         else:
             iterable_length = len(correct_op)
 
-        score_object = Score.objects.get(user_f=current_user, question_f=current_question)
+
 
         score = 0
 
@@ -195,7 +203,7 @@ def handle_answer(request, user_id, question_id):
                    'user_id': user_id, 'checker': checker,
                    'remaining_time': current_user.end_time - time.time(), 'error_msg': output_to_display,
                    'bought': True, 'question_id': question_id, 'question_score': score_object.score,
-                   'money': current_user.money, 'language': language})
+                   'money': current_user.money, 'language': current_user.language_preferred})
 
     else:
         print('something else')
@@ -205,7 +213,7 @@ def handle_answer(request, user_id, question_id):
                        'selected_question': current_question,
                        'user_id': user_id, 'checker': False,
                        'remaining_time': current_user.end_time - time.time(), 'error_msg': str(output_to_display)
-                          , "question_id": question_id, 'bought': True, 'language': language})
+                          , "question_id": question_id, 'bought': True, 'language': current_user.language_preferred})
 
     # output after running the code with test cases
 
