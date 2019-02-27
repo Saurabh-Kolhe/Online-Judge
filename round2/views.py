@@ -97,8 +97,15 @@ def question_details(request, user_id, question_id):
     selected_question = Question.objects.get(pk=question_id)
     # print(selected_question)
     current_user = User.objects.get(pk=user_id)
-    score_object = Score.objects.get(user_f=current_user, question_f=selected_question)
-    language = score_object.language_preferred
+    try:
+        score_object = Score.objects.get(user_f=current_user, question_f=selected_question)
+    except:
+        score_object = None
+
+    if score_object:
+        language = score_object.language_preferred
+    else:
+        pass
 
     # print(current_user.end_time)
     # print(current_user.end_time - time.time())
@@ -130,8 +137,9 @@ def handle_answer(request, user_id, question_id):
     if request.POST.get("finish"):
         return leaderboard(request, user_id)
     # code = request.POST.get("text_area")
-    print(language)
+    # print(language)
     input_file = str(question_id) + '_' + str(user_id)
+    language = request.POST.get("language")
 
     code = request.POST.get("text_area")
     f = open(input_file + '.' + language, 'w')
