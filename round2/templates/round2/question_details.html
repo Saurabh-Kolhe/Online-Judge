@@ -259,10 +259,16 @@
                         Code
                         Editor
 
-                         <select name= "language" id = "language" style="float: right">
-                              <option value="c">C</option>
-                              <option value="cpp">C++</option>
-                            </select>
+                         <select name= "language" id = "language" style="float: right" >
+
+                             {%  if language == 'c' %}
+                                  <option value="c" selected ="selected">C</option>
+                                  <option value="cpp" selected ="">C++</option>
+                              {% else %}
+                                  <option value="c" selected ="">C</option>
+                                  <option value="cpp" selected ="selected">C++</option>
+                              {%  endif %}
+                         </select>
                         <br>
                     </div>
                     <!--<div id="text_area" name="text_area" style="margin-top: 0px;" ></div>

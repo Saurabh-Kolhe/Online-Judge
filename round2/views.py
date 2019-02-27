@@ -118,14 +118,14 @@ def question_details(request, user_id, question_id):
                    'question_id': selected_question.pk,
                    'user_id': user_id, 'submitted_code': previous_code,
                    'remaining_time': current_user.end_time - time.time(),
-                   'money': current_user.money})
+                   'money': current_user.money, 'language': 'c'})
 
 
 def handle_answer(request, user_id, question_id):
     if request.POST.get("finish"):
         return leaderboard(request, user_id)
     # code = request.POST.get("text_area")
-    language = "cpp"#request.POST.get("language")
+    language = request.POST.get("language")
     print(language)
     input_file = str(question_id) + '_' + str(user_id)
 
@@ -143,25 +143,26 @@ def handle_answer(request, user_id, question_id):
     correct_op = jsonDec.decode(current_question.correct_op)
 
     checker = [None] * len(correct_op)
-    input = jsonDec.decode(current_question.input)
+    input_value = jsonDec.decode(current_question.input)
     input_str = ""
-    for i in input:
+    for i in input_value:
         input_str += (str(i) + ' ')
     print('this is input'+input_str)
 
-
-    f = open(input_file + '.txt','w')
+    f = open(input_file + '.txt', 'w')
     f.write(input_str)
     f.close()
 
-    compiler = 'g++ '
-    if language is 'cpp':
+    compiler = 'gcc '
+    print(language)
+    if language == 'cpp':
         compiler = 'g++ '
 
     compile_output = subprocess.getoutput(
-        compiler +' -o ' + input_file + ' ' + input_file + '.' + language)
+        compiler + ' -o ' + input_file + ' ' + input_file + '.' + language)
 
     if not compile_output:
+        # compile_output = subprocess.getoutput('a.exe < input_file.txt')
         compile_output = subprocess.getoutput(
             './' + input_file + ' <' + input_file + '.txt')
         output_to_display = False
@@ -179,10 +180,14 @@ def handle_answer(request, user_id, question_id):
         else:
             iterable_length = len(correct_op)
 
+        score_object = Score.objects.get(user_f=current_user, question_f=current_question)
+
+        score = 0
+
         for i in range(iterable_length):
             if generated_output[i] == str(correct_op[i]):
                 checker[i] = True
-
+                score += 1
 
         return render(request, 'round2/question_details.html',
                   {'pegs_id': int("3"), 'error_msg': False, 'submitted': True, 'one': 50, 'two': 50,
@@ -190,8 +195,7 @@ def handle_answer(request, user_id, question_id):
                    'user_id': user_id, 'checker': checker,
                    'remaining_time': current_user.end_time - time.time(), 'error_msg': output_to_display,
                    'bought': True, 'question_id': question_id, 'question_score': score_object.score,
-                   'money': current_user.money})
-
+                   'money': current_user.money, 'language': language})
 
     else:
         print('something else')
@@ -200,8 +204,8 @@ def handle_answer(request, user_id, question_id):
                       {'pegs_id': int("3"), 'submitted': False, 'submitted_code': code,
                        'selected_question': current_question,
                        'user_id': user_id, 'checker': False,
-                       'remaining_time': current_user.end_time - time.time(), 'error_msg': str(compile_output)
-                          , "question_id": question_id, 'bought': True})
+                       'remaining_time': current_user.end_time - time.time(), 'error_msg': str(output_to_display)
+                          , "question_id": question_id, 'bought': True, 'language': language})
 
     # output after running the code with test cases
 
