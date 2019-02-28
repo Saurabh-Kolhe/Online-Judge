@@ -118,16 +118,20 @@ def question_details(request, user_id, question_id):
     # for marks in all_marks:
     #     current_user.total_score += marks
     current_user.save()
-    try:
-        previous_code = open(input_file + '.'+language, 'r').read()
-    except:
+    if os.path.isfile(input_file + '.' + language):
+        f = open(input_file + '.' + language, 'r')
+        f.flush()
+        previous_code = f.read()
+        f.close()
+    else:
         previous_code = ""
+
     return render(request, 'round2/question_details.html',
                   {'pegs_id': int("3"), 'bought': bought, 'selected_question': selected_question,
                    'question_id': selected_question.pk,
                    'user_id': user_id, 'submitted_code': previous_code,
                    'remaining_time': current_user.end_time - time.time(),
-                   'money': current_user.money, 'language':language})
+                   'money': current_user.money, 'language': language})
 
 
 def handle_answer(request, user_id, question_id):
@@ -147,7 +151,6 @@ def handle_answer(request, user_id, question_id):
     current_user = User.objects.get(pk=user_id)
     current_question = Question.objects.get(pk=question_id)
     score_object = Score.objects.get(user_f=current_user, question_f=current_question)
-    language = request.POST.get("language")
     jsonDec = json.decoder.JSONDecoder()
     score_object = Score.objects.get(user_f=current_user, question_f=current_question)
 
@@ -168,16 +171,17 @@ def handle_answer(request, user_id, question_id):
 
     compiler = 'gcc '
     print(language)
-    if language == 'cpp':
+    if language == 'cpp' || language == 'cpp14':
         compiler = 'g++ '
 
+    # c++14 compilation logic here
     compile_output = subprocess.getoutput(
         compiler + ' -o ' + input_file + ' ' + input_file + '.' + language)
 
     if not compile_output:
         # compile_output = subprocess.getoutput('a.exe < input_file.txt')
         compile_output = subprocess.getoutput(
-            './' + input_file + ' <' + input_file + '.txt')
+            './' + input_file + ' <' + input_file + '.txt', time_finish)  # TLE Logic to e implemented here
         output_to_display = False
 
         generated_output = compile_output.split()
@@ -193,14 +197,16 @@ def handle_answer(request, user_id, question_id):
         else:
             iterable_length = len(correct_op)
 
-
-        print(compile_output+"<-this ")
         score = 0
+        score_for_one = (current_question.cost*2)/len(correct_op)
 
         for i in range(iterable_length):
             if generated_output[i] == str(correct_op[i]):
                 checker[i] = True
-                score += 1
+                score += score_for_one
+
+        if score > score_object.score:
+            current_user.money += (score - score_object.score)
 
         return render(request, 'round2/question_details.html',
                   {'pegs_id': int("3"), 'error_msg': False, 'submitted': True, 'one': 50, 'two': 50,
@@ -218,7 +224,7 @@ def handle_answer(request, user_id, question_id):
                        'selected_question': current_question,
                        'user_id': user_id, 'checker': False,
                        'remaining_time': current_user.end_time - time.time(), 'error_msg': str(output_to_display)
-                          , "question_id": question_id, 'bought': True, 'language': score_object.language_preferred})
+                          , "question_id": question_id, 'bought': True, 'money': current_user.money, 'language': score_object.language_preferred})
 
     # output after running the code with test cases
 

@@ -257,16 +257,22 @@
                     <div id="code_editor" name="code_editor"
                          style="margin-bottom: 0px; font-weight: bold; font-size:150%;">
                         Code
-                        Editor {{ language }}
+                        Editor
 
                          <select name= "language" id = "language" style="float: right" >
 
                              {%  if language == 'c' %}
-                                  <option value="c" selected ="selected">C</option>
-                                  <option value="cpp" >C++</option>
-                              {% else %}
-                                  <option value="c" >C</option>
-                                  <option value="cpp" selected ="selected">C++</option>
+                                 <option value="c" selected ="selected">C</option>
+                                 <option value="cpp" >C++</option>
+                                 <option value="cpp14" >C++14</option>
+                              {% elif language == "cpp" %}
+                                 <option value="c" >C</option>
+                                 <option value="cpp" selected ="selected">C++</option>
+                                 <option value="cpp14" >C++14</option>
+                              {% elif language == 'cpp14' %}
+                                 <option value="c" >C</option>
+                                 <option value="cpp">C++</option>
+                                 <option value="cpp14" selected ="selected">C++14</option>
                               {%  endif %}
                          </select>
                         <br>
@@ -383,6 +389,13 @@
 
     </div>
 </div>
+<script>
+    history.pushState(null, null, document.title);
+        window.addEventListener('popstate', function () {
+        history.pushState(null, null, document.title);
+        alert('The only way is Ahead..!!!');
+    });
+</script>
 
 </body>
 
@@ -394,6 +407,8 @@
 <!-- timer -->
 
 <script>
+
+
     function prompt_user() {
         if (confirm('Are you sure you want to save this thing into the database?')) {
             window.location.replace(" {%url 'round2:leaderboard' user_id %}");
@@ -403,6 +418,17 @@
     }
 </script>
 <script type="text/javascript">
+
+    var text_area = document.getElementById('text_area');
+    text_area.onkeydown = function (ev) {
+        if(ev.code == 'Tab'){
+            {#alert(ev.code)#}
+            ev.preventDefault();
+            var s = this.selectionStart;
+            this.value = this.value.substring(0,this.selectionStart) + "\t" + this.value.substring(this.selectionEnd);
+            this.selectionEnd = s+1;
+        }
+    };
 
     function startTimer(duration, display) {
         var start = Date.now(),
