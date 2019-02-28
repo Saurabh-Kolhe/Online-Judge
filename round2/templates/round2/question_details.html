@@ -6,7 +6,7 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>EarnCode</title>
+    <title></title>
 
     <link href="{% static '/css/font.css' %}" rel="stylesheet">
     <script src="{% static '/js/jquery.min.js' %}"></script>
@@ -18,10 +18,10 @@
 
 
     <script src="{% static '/js/bootstrap.min.js' %}"></script>
-    <title>Earn Code</title>
+    <title></title>
     <style>
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: Arial, Helvetica, sans-serif; padding-bottom: 25px;
         }
 
         div.fixed {
@@ -227,9 +227,9 @@
             Statement
         </div>
 
-        <div id="question" class="row" style="font-size:140%;">
+        <div id="question" class="row" style="font-size:140%; width: 100%; word-wrap: break-word">
 
-        <pre>{{ selected_question.question }}
+        <pre style="white-space: pre-wrap; word-break: keep-all;">{{ selected_question.question }}
         <table style="width:50%">
           <tr>
             <th>Test input</th>
@@ -243,7 +243,7 @@
           </tr>
 
 
-        </table>
+        </table><br>{{ selected_question.explanation }}
         </pre>
 
 

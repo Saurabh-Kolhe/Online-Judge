@@ -103,6 +103,12 @@ def question_details(request, user_id, question_id):
     except:
         language = 'c'
 
+    file_extension = 'c'
+
+    if language == 'cpp':
+        file_extension = 'cpp'
+    elif language == 'cpp14':
+        file_extension = 'cpp'
 
     # print(current_user.end_time)
     # print(current_user.end_time - time.time())
@@ -118,8 +124,8 @@ def question_details(request, user_id, question_id):
     # for marks in all_marks:
     #     current_user.total_score += marks
     current_user.save()
-    if os.path.isfile(input_file + '.' + language):
-        f = open(input_file + '.' + language, 'r')
+    if os.path.isfile(input_file + '.' + file_extension):
+        f = open(input_file + '.' + file_extension, 'r')
         f.flush()
         previous_code = f.read()
         f.close()
@@ -142,8 +148,19 @@ def handle_answer(request, user_id, question_id):
     input_file = str(question_id) + '_' + str(user_id)
     language = request.POST.get("language")
 
+    file_extension = 'c'
+    # changes more
+    compiler = 'gcc '
+    print(language)
+    if language == 'cpp':
+        compiler = 'g++ -std=c++11'
+        file_extension = 'cpp'
+    elif language == 'cpp14':
+        compiler = 'g++ -std=c++14 '
+        file_extension = 'cpp'
+
     code = request.POST.get("text_area")
-    f = open(input_file + '.' + language, 'w')
+    f = open(input_file + '.' + file_extension, 'w')
     # f=open('test.cpp','w')
     f.write(code)
     f.close()
@@ -152,7 +169,6 @@ def handle_answer(request, user_id, question_id):
     current_question = Question.objects.get(pk=question_id)
     score_object = Score.objects.get(user_f=current_user, question_f=current_question)
     jsonDec = json.decoder.JSONDecoder()
-    score_object = Score.objects.get(user_f=current_user, question_f=current_question)
 
     score_object.language_preferred = language
     score_object.save()
@@ -169,21 +185,13 @@ def handle_answer(request, user_id, question_id):
     f.write(input_str)
     f.close()
 
-    # changes more
-    compiler = 'gcc '
-    print(language)
-    if language == 'cpp':
-        compiler = 'g++ '
-    elif language == 'cpp14':
-        compiler = 'g++ -std=c++14 '
-
     compile_output = subprocess.getoutput(
-        compiler + ' -o ' + input_file + ' ' + input_file + '.' + language)
+        compiler + ' -o ' + input_file + ' ' + input_file + '.' + file_extension)
 
     if not compile_output:
         # compile_output = subprocess.getoutput('a.exe < input_file.txt')
         compile_output = subprocess.getoutput(
-            './' + input_file + ' <' + input_file + '.txt', time_finish)  # TLE Logic to e implemented here
+            './' + input_file + ' <' + input_file + '.txt')  # TLE Logic to e implemented here
         output_to_display = False
 
         generated_output = compile_output.split()
@@ -207,8 +215,12 @@ def handle_answer(request, user_id, question_id):
                 checker[i] = True
                 score += score_for_one
 
+        print(score,score_object.score)
         if score > score_object.score:
             current_user.money += (score - score_object.score)
+            current_user.save()
+            score_object.score = score
+            score_object.save()
 
         return render(request, 'round2/question_details.html',
                   {'pegs_id': int("3"), 'error_msg': False, 'submitted': True, 'one': 50, 'two': 50,

@@ -26,10 +26,10 @@ class Question(models.Model):
     question_title = models.CharField(max_length=2000)
     input = models.CharField(default=0, max_length=5000)
     correct_op = models.CharField(default=0, max_length=10000)
-    explanation = models.CharField(max_length=7000)
-    test_input = models.CharField(max_length=100000)
+    explanation = models.TextField(max_length=7000)
+    test_input = models.TextField(max_length=100000)
 
-    test_output = models.CharField(max_length=10000)
+    test_output = models.TextField(max_length=10000)
     cost = models.IntegerField()
     user = models.ManyToManyField(User, null=True, through="Score")
     type = models.CharField(default="Easy", max_length=10)
