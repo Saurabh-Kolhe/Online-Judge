@@ -171,10 +171,11 @@ def handle_answer(request, user_id, question_id):
 
     compiler = 'gcc '
     print(language)
-    if language == 'cpp' || language == 'cpp14':
+    if language == 'cpp':
         compiler = 'g++ '
+    elif language == 'cpp14':
+        compiler = 'g++ -std=c++14 '
 
-    # c++14 compilation logic here
     compile_output = subprocess.getoutput(
         compiler + ' -o ' + input_file + ' ' + input_file + '.' + language)
 
