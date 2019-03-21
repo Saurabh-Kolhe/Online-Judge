@@ -4,9 +4,10 @@ import signal
 from django.shortcuts import render, HttpResponse
 from .models import User, Question, Score
 import subprocess
+from subprocess import Popen, PIPE, STDOUT
 import json
 # import pyperclip
-from subprocess import Popen, PIPE
+# from subprocess import Popen, PIPE
 import time
 import threading
 
@@ -16,6 +17,21 @@ time_finish = True
 ps_id = 0
 tle = False
 
+
+# Working code
+tle_array = [False for i in range(20)]
+
+
+def check_tle(pid, i):
+    time.sleep(1)
+    #     global tle
+    try:
+        os.killpg(os.getpgid(pid), signal.SIGTERM)
+        tle_array[i] = True
+    except:
+        tle_array[i] = False
+
+# Ends here
 
 def timeout(sig, frm):
     print('timeout')
@@ -151,10 +167,11 @@ def handle_answer(request, user_id, question_id):
     file_extension = 'c'
     # changes more
     compiler = 'gcc '
-    print(language)
+    print('This is the language selected ' + language)
     if language == 'cpp':
         compiler = 'g++ -std=c++11'
         file_extension = 'cpp'
+
     elif language == 'cpp14':
         compiler = 'g++ -std=c++14 '
         file_extension = 'cpp'
@@ -172,50 +189,78 @@ def handle_answer(request, user_id, question_id):
 
     score_object.language_preferred = language
     score_object.save()
-    correct_op = jsonDec.decode(current_question.correct_op)
 
-    checker = [None] * len(correct_op)
-    input_value = jsonDec.decode(current_question.input)
-    input_str = ""
-    for i in input_value:
-        input_str += (str(i) + ' ')
-    print('this is input'+input_str)
-
-    f = open(input_file + '.txt', 'w')
-    f.write(input_str)
-    f.close()
 
     compile_output = subprocess.getoutput(
         compiler + ' -o ' + input_file + ' ' + input_file + '.' + file_extension)
 
     if not compile_output:
-        # compile_output = subprocess.getoutput('a.exe < input_file.txt')
-        compile_output = subprocess.getoutput(
-            './' + input_file + ' <' + input_file + '.txt')  # TLE Logic to e implemented here
-        output_to_display = False
+        correct_op = jsonDec.decode(current_question.correct_op)
 
-        generated_output = compile_output.split()
+        input_value = jsonDec.decode(current_question.input)
+        print('this is input values list')
+        print(input_value)
 
-        # print(type(generated_output),type(correct_op))
-
-        if len(generated_output) < len(correct_op):
-            output_to_display = compile_output
-            iterable_length = len(generated_output)
-        elif len(generated_output) > len(correct_op):
-            output_to_display = compile_output
-            iterable_length = len(correct_op)
-        else:
-            iterable_length = len(correct_op)
+        checker = [None] * len(correct_op)
 
         score = 0
-        score_for_one = (current_question.cost*2)/len(correct_op)
+        score_for_one = (current_question.cost * 2) / len(correct_op)
 
-        for i in range(iterable_length):
-            if generated_output[i] == str(correct_op[i]):
-                checker[i] = True
-                score += score_for_one
+        for tc in range(0, len(input_value)):
+            input_str = ""
+            for i in input_value[tc]:
+                input_str += (str(i) + '\n')
 
-        print(score,score_object.score)
+            print('giving this as input ' + input_str)
+
+            process = Popen(['./' + input_file], shell=True, stdout=PIPE, stderr=PIPE, stdin=PIPE, preexec_fn=os.setsid)
+            tle_array[tc] = False
+
+            process.stdin.write(input_str.encode())
+            process.stdin.flush()
+
+            tle_thread = threading.Thread(target=check_tle, args=(process.pid, tc))
+            tle_thread.start()
+
+            errors = ""
+            # errors = process.stderr.readline()
+
+            output = process.stdout.readline().rstrip()
+
+            if tle_array[tc]:
+                print('Time Limit Exceed')
+                checker[tc] = 2
+            else:
+
+                try:
+                    output = output.decode()
+                except:
+                    pass
+
+                print('This is the output of program')
+                print(output)
+                # generated_output = output.split()
+                # print(generated_output)
+                # score = 0
+                # score_for_one = (current_question.cost * 2) / len(correct_op)
+                print('This is the correct output')
+                print(correct_op[tc])
+
+                if(current_question.pk == 15):
+                    output = float(output)
+                    check = float(correct_op[tc])
+
+                    if(check-output < 0.000001 or output-check < 0.000001):
+                        score += score_for_one
+                        checker[tc] = 1
+
+                if (current_question.pk != 15 and str(output) == str(correct_op[tc])):
+                    print("And this is correct")
+                    score += score_for_one
+                    checker[tc] = 1
+
+            tle_array[tc] = False
+
         if score > score_object.score:
             current_user.money += (score - score_object.score)
             current_user.save()
@@ -223,12 +268,13 @@ def handle_answer(request, user_id, question_id):
             score_object.save()
 
         return render(request, 'round2/question_details.html',
-                  {'pegs_id': int("3"), 'error_msg': False, 'submitted': True, 'one': 50, 'two': 50,
-                   'three': 100, 'four': 100, 'submitted_code': code, 'selected_question': current_question,
-                   'user_id': user_id, 'checker': checker,
-                   'remaining_time': current_user.end_time - time.time(), 'error_msg': output_to_display,
-                   'bought': True, 'question_id': question_id, 'question_score': score_object.score,
-                   'money': current_user.money, 'language': score_object.language_preferred})
+                      {'pegs_id': int("3"), 'error_msg': False, 'submitted': True, 'one': 50, 'two': 50,
+                       'three': 100, 'four': 100, 'submitted_code': code, 'selected_question': current_question,
+                       'user_id': user_id, 'checker': checker, "one_score":score_for_one,
+                       'remaining_time': current_user.end_time - time.time(), 'error_msg': errors,
+                       'bought': True, 'question_id': question_id, 'question_score': score_object.score,
+                       'money': current_user.money, 'language': score_object.language_preferred})
+
 
     else:
         print('something else')
@@ -238,7 +284,209 @@ def handle_answer(request, user_id, question_id):
                        'selected_question': current_question,
                        'user_id': user_id, 'checker': False,
                        'remaining_time': current_user.end_time - time.time(), 'error_msg': str(output_to_display)
-                          , "question_id": question_id, 'bought': True, 'money': current_user.money, 'language': score_object.language_preferred})
+                          , "question_id": question_id, 'bought': True, 'money': current_user.money,
+                       'language': score_object.language_preferred})
+
+
+############################################33
+
+    #
+    # correct_op = jsonDec.decode(current_question.correct_op)
+    #
+    # checker = [None] * len(correct_op)
+    # input_value = jsonDec.decode(current_question.input)
+    #
+    # score = 0
+    # score_for_one = (current_question.cost * 2) / len(correct_op)
+    #
+    # print('this is input values list')
+    # print(input_value)
+    #
+    # for tc in range(0,len(input_value)):
+    #     input_str = ""
+    #     for i in input_value[tc]:
+    #         input_str += (str(i) + '\n')
+    #
+    #     print('giving this as input ' + input_str)
+    #
+    #     compile_output = subprocess.getoutput(
+    #         compiler + ' -o ' + input_file + ' ' + input_file + '.' + file_extension)
+    #
+    #     if not compile_output:
+    #         process = Popen(['./' + input_file], shell=True, stdout=PIPE, stdin=PIPE, preexec_fn=os.setsid)
+    #         tle_array[tc] = False
+    #
+    #         process.stdin.write(input_str.encode())
+    #         process.stdin.flush()
+    #
+    #         tle_thread = threading.Thread(target=check_tle, args=(process.pid, tc))
+    #         tle_thread.start()
+    #
+    #         output = process.stdout.readline()
+    #
+    #         if tle_array[tc]:
+    #             print('Time Limit Exceed')
+    #         else:
+    #             output = output.decode()
+    #             print(output)
+    #             # generated_output = output.split()
+    #             # print(generated_output)
+    #             score = 0
+    #             score_for_one = (current_question.cost * 2) / len(correct_op)
+    #             if output == correct_op[tc]:
+    #                 score += score_for_one
+    #
+    #             if score > score_object.score:
+    #                 current_user.money += (score - score_object.score)
+    #                 current_user.save()
+    #                 score_object.score = score
+    #                 score_object.save()
+    #
+    #             return render(request, 'round2/question_details.html',
+    #                           {'pegs_id': int("3"), 'error_msg': False, 'submitted': True, 'one': 50, 'two': 50,
+    #                            'three': 100, 'four': 100, 'submitted_code': code, 'selected_question': current_question,
+    #                            'user_id': user_id, 'checker': checker,
+    #                            'remaining_time': current_user.end_time - time.time(), 'error_msg': "",
+    #                            'bought': True, 'question_id': question_id, 'question_score': score_object.score,
+    #                            'money': current_user.money, 'language': score_object.language_preferred})
+    #
+    #         tle_array[tc] = False
+    #
+    #     else:
+    #         print('something else')
+    #         output_to_display = compile_output
+    #         return render(request, 'round2/question_details.html',
+    #                       {'pegs_id': int("3"), 'submitted': False, 'submitted_code': code,
+    #                        'selected_question': current_question,
+    #                        'user_id': user_id, 'checker': False,
+    #                        'remaining_time': current_user.end_time - time.time(), 'error_msg': str(output_to_display)
+    #                           , "question_id": question_id, 'bought': True, 'money': current_user.money,
+    #                        'language': score_object.language_preferred})
+    #
+
+
+
+        # print('input: '+input_str)
+        # compile_output = subprocess.getoutput(
+        #     compiler + ' -o ' + input_file + ' ' + input_file + '.' + file_extension)
+        #
+        # if not compile_output:
+        #     # compile_output = subprocess.getoutput('a.exe < input_file.txt')
+        #     compile_output = subprocess.getoutput(
+        #         './' + input_file + ' <' + input_file + '.txt')  # TLE Logic to e implemented here
+        #     output_to_display = False
+        #     print('compile ' + compile_output)
+        #     generated_output = compile_output.split()
+        #     # generated_output = compile_output
+        #     # print(generated_output + "sd")
+        #
+        #     print(len(generated_output) + len(correct_op))
+        #     if len(generated_output) < len(correct_op):
+        #         output_to_display = compile_output
+        #         iterable_length = len(generated_output)
+        #     elif len(generated_output) > len(correct_op):
+        #         output_to_display = compile_output
+        #         iterable_length = len(correct_op)
+        #     else:
+        #         iterable_length = len(correct_op)
+        #
+        #     score = 0
+        #     score_for_one = (current_question.cost * 2) / len(correct_op)
+        #
+        #     for i in range(iterable_length):
+        #         if generated_output[i] == str(correct_op[i]):
+        #             checker[i] = True
+        #             score += score_for_one
+        #
+        #     # print(score, score_object.score)
+        #     if score > score_object.score:
+        #         current_user.money += (score - score_object.score)
+        #         current_user.save()
+        #         score_object.score = score
+        #         score_object.save()
+        #
+        #     return render(request, 'round2/question_details.html',
+        #                   {'pegs_id': int("3"), 'error_msg': False, 'submitted': True, 'one': 50, 'two': 50,
+        #                    'three': 100, 'four': 100, 'submitted_code': code, 'selected_question': current_question,
+        #                    'user_id': user_id, 'checker': checker,
+        #                    'remaining_time': current_user.end_time - time.time(), 'error_msg': output_to_display,
+        #                    'bought': True, 'question_id': question_id, 'question_score': score_object.score,
+        #                    'money': current_user.money, 'language': score_object.language_preferred})
+        #
+        # else:
+        #     print('something else')
+        #     output_to_display = compile_output
+        #     return render(request, 'round2/question_details.html',
+        #                   {'pegs_id': int("3"), 'submitted': False, 'submitted_code': code,
+        #                    'selected_question': current_question,
+        #                    'user_id': user_id, 'checker': False,
+        #                    'remaining_time': current_user.end_time - time.time(), 'error_msg': str(output_to_display)
+        #                       , "question_id": question_id, 'bought': True, 'money': current_user.money,
+        #                    'language': score_object.language_preferred})
+
+    # input_str = ""
+    # for i in input_value:
+    #     input_str += (str(i) + ' ')
+    # print('this is input'+input_str)
+    #
+    # f = open(input_file + '.txt', 'w')
+    # f.write(input_str)
+    # f.close()
+    #
+    # compile_output = subprocess.getoutput(
+    #     compiler + ' -o ' + input_file + ' ' + input_file + '.' + file_extension)
+    #
+    # if not compile_output:
+    #     # compile_output = subprocess.getoutput('a.exe < input_file.txt')
+    #     compile_output = subprocess.getoutput(
+    #         './' + input_file + ' <' + input_file + '.txt')  # TLE Logic to e implemented here
+    #     output_to_display = False
+    #
+    #     generated_output = compile_output.split()
+    #
+    #     # print(type(generated_output),type(correct_op))
+    #
+    #     if len(generated_output) < len(correct_op):
+    #         output_to_display = compile_output
+    #         iterable_length = len(generated_output)
+    #     elif len(generated_output) > len(correct_op):
+    #         output_to_display = compile_output
+    #         iterable_length = len(correct_op)
+    #     else:
+    #         iterable_length = len(correct_op)
+    #
+    #     score = 0
+    #     score_for_one = (current_question.cost*2)/len(correct_op)
+    #
+    #     for i in range(iterable_length):
+    #         if generated_output[i] == str(correct_op[i]):
+    #             checker[i] = True
+    #             score += score_for_one
+    #
+    #     print(score,score_object.score)
+    #     if score > score_object.score:
+    #         current_user.money += (score - score_object.score)
+    #         current_user.save()
+    #         score_object.score = score
+    #         score_object.save()
+    #
+    #     return render(request, 'round2/question_details.html',
+    #               {'pegs_id': int("3"), 'error_msg': False, 'submitted': True, 'one': 50, 'two': 50,
+    #                'three': 100, 'four': 100, 'submitted_code': code, 'selected_question': current_question,
+    #                'user_id': user_id, 'checker': checker,
+    #                'remaining_time': current_user.end_time - time.time(), 'error_msg': output_to_display,
+    #                'bought': True, 'question_id': question_id, 'question_score': score_object.score,
+    #                'money': current_user.money, 'language': score_object.language_preferred})
+    #
+    # else:
+    #     print('something else')
+    #     output_to_display = compile_output
+    #     return render(request, 'round2/question_details.html',
+    #                   {'pegs_id': int("3"), 'submitted': False, 'submitted_code': code,
+    #                    'selected_question': current_question,
+    #                    'user_id': user_id, 'checker': False,
+    #                    'remaining_time': current_user.end_time - time.time(), 'error_msg': str(output_to_display)
+    #                       , "question_id": question_id, 'bought': True, 'money': current_user.money, 'language': score_object.language_preferred})
 
     # output after running the code with test cases
 

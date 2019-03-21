@@ -290,7 +290,6 @@
 {#                        {{ output_to_display }}#}
 {#                    </div>#}
                     <br>
-                    <input class="btn" type="submit" name="run" value="run" id="run-code">
                     <input class="btn btn-success" type="submit" name="submit" value="submit" id="submit_code">
 
 
@@ -307,7 +306,7 @@
                     </div>
                 {% else %}
                     <div class="col-md-1">
-                        <button class="btn btn-danger" onclick="prompt_user()">Finish</button>
+{#                        <button class="btn btn-danger" onclick="prompt_user()">Finish</button>#}
                     </div>
                 {% endif %}
 
@@ -326,18 +325,26 @@
                     {% for answer in checker %}
                         <tr>
 
-                            {% if answer %}
+                            {% if answer == 1 %}
                                 <td style="background-color:#00ff00; width:5%;padding:5px ;border:25px solid white "></td>
+
+                            {% elif answer == 2 %}
+                                <td style="background-color:#ffff00; width:5%;padding:5px ;border:25px solid white "></td>
+
                             {% else %}
                                 <td style="background-color:#ff0000; width:5%; padding:5px;border:25px solid white"></td>
                             {% endif %}
                             <td style="padding:20px; width:60%">Input{{ forloop.counter }}</td>
                             <td>
-                                {% if answer %}
-                                    2
+                                {% if answer == 1 %}
+                                    {{ one_score }}
+
+                                {% elif answer == 2 %}
+                                    TLE
 
                                 {% else %}
                                     0
+
                                 {% endif %}
                             </td>
                         </tr>

@@ -24,7 +24,7 @@ class User(models.Model):
 class Question(models.Model):
     question = models.TextField(max_length=4000)
     question_title = models.CharField(max_length=2000)
-    input = models.CharField(default=0, max_length=5000)
+    input = models.CharField(default=0, max_length=15000)
     correct_op = models.CharField(default=0, max_length=10000)
     explanation = models.TextField(max_length=7000)
     test_input = models.TextField(max_length=100000)
